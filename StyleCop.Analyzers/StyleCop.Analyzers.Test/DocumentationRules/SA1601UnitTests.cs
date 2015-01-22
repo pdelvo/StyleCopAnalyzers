@@ -13,15 +13,13 @@
     [TestClass]
     public class SA1601UnitTests : DiagnosticVerifier<SA1601PartialElementsMustBeDocumented>
     {
-        protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
-
         public string DiagnosticId { get; } = SA1601PartialElementsMustBeDocumented.DiagnosticId;
 
         [TestMethod]
         public async Task TestEmptySource()
         {
             var testCode = @"";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -34,9 +32,9 @@
 public partial {0} TypeName
 {{
 }}";
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "class"), EmptyDiagnosticResults, CancellationToken.None);
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "struct"), EmptyDiagnosticResults, CancellationToken.None);
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "interface"), EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "class"), EmptyDiagnosticResults);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "struct"), EmptyDiagnosticResults);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "interface"), EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -65,9 +63,9 @@ TypeName
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "class"), expected, CancellationToken.None);
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "struct"), expected, CancellationToken.None);
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "interface"), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "class"), expected);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "struct"), expected);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "interface"), expected);
         }
 
         [TestMethod]
@@ -99,9 +97,9 @@ TypeName
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "class"), expected, CancellationToken.None);
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "struct"), expected, CancellationToken.None);
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "interface"), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "class"), expected);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "struct"), expected);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, "interface"), expected);
         }
 
         [TestMethod]
@@ -118,7 +116,7 @@ public partial class TypeName
     /// </summary>
     partial void MemberName();
 }}";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -151,7 +149,7 @@ public partial class TypeName
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
         }
 
         [TestMethod]
@@ -187,7 +185,7 @@ public partial class TypeName
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
         }
     }
 }

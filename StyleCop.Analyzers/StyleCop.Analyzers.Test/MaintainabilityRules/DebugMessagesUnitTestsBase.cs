@@ -13,7 +13,6 @@
         where TAnalyzer : DiagnosticAnalyzer, new()
 
     {
-        protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
 
         protected abstract string DiagnosticId
         {
@@ -34,7 +33,7 @@
         public async Task TestEmptySource()
         {
             var testCode = @"";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -175,7 +174,7 @@ public class Foo
     }}}}
 }}}}";
 
-            await VerifyCSharpDiagnosticAsync(string.Format(BuildTestCode(testCodeFormat), argument), EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(BuildTestCode(testCodeFormat), argument), EmptyDiagnosticResults);
         }
 
         private async Task TestConstantMessage_Local_Pass(string argument)
@@ -190,7 +189,7 @@ public class Foo
     }}}}
 }}}}";
 
-            await VerifyCSharpDiagnosticAsync(string.Format(BuildTestCode(testCodeFormat), argument), EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(BuildTestCode(testCodeFormat), argument), EmptyDiagnosticResults);
         }
 
         private async Task TestConstantMessage_Inline_Pass(string argument)
@@ -204,7 +203,7 @@ public class Foo
     }}}}
 }}}}";
 
-            await VerifyCSharpDiagnosticAsync(string.Format(BuildTestCode(testCodeFormat), argument), EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(BuildTestCode(testCodeFormat), argument), EmptyDiagnosticResults);
         }
 
         private async Task TestConstantMessage_Field_Fail(string argument)
@@ -234,7 +233,7 @@ public class Foo
                         }
                     };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(BuildTestCode(testCodeFormat), argument), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(BuildTestCode(testCodeFormat), argument), expected);
         }
 
         private async Task TestConstantMessage_Local_Fail(string argument)
@@ -264,7 +263,7 @@ public class Foo
                         }
                     };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(BuildTestCode(testCodeFormat), argument), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(BuildTestCode(testCodeFormat), argument), expected);
         }
 
         private async Task TestConstantMessage_Inline_Fail(string argument)
@@ -293,7 +292,7 @@ public class Foo
                         }
                     };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(BuildTestCode(testCodeFormat), argument), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(BuildTestCode(testCodeFormat), argument), expected);
         }
 
         [TestMethod]
@@ -308,7 +307,7 @@ public class Foo
     }}
 }}";
 
-            await VerifyCSharpDiagnosticAsync(BuildTestCode(testCode), EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(BuildTestCode(testCode), EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -332,7 +331,7 @@ class Debug
 }}
 ";
 
-            await VerifyCSharpDiagnosticAsync(BuildTestCode(testCode), EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(BuildTestCode(testCode), EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -347,7 +346,7 @@ public class Foo
     }}
 }}";
 
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         protected virtual string BuildTestCode(string format)

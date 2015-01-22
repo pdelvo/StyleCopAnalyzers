@@ -27,7 +27,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
         public async Task TestEmptySource()
         {
             var testCode = @"";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
             var testCode = @"%1 Foo
 {
 }";
-            await VerifyCSharpDiagnosticAsync(testCode.Replace("%1",Keyword), EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode.Replace("%1",Keyword), EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -64,7 +64,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode.Replace("%1", Keyword), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode.Replace("%1", Keyword), expected);
         }
 
         [TestMethod]
@@ -106,7 +106,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode.Replace("%1", Keyword), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode.Replace("%1", Keyword), expected);
         }
     }
 }

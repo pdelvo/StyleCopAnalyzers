@@ -63,7 +63,7 @@ public class Foo
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
         }
     }
 }

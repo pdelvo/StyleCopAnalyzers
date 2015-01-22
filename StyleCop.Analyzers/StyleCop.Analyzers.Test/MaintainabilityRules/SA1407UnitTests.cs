@@ -11,13 +11,12 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
     public class SA1407UnitTests : CodeFixVerifier<SA1407ArithmeticExpressionsMustDeclarePrecedence, SA1407SA1408CodeFixProvider>
     {
         private const string DiagnosticId = SA1407ArithmeticExpressionsMustDeclarePrecedence.DiagnosticId;
-        protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
 
         [TestMethod]
         public async Task TestEmptySource()
         {
             var testCode = @"";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -30,7 +29,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
         int x = 1 - 1 + 1 - 1;
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -43,7 +42,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
         int x = 1 / 1 * 1 / 1;
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -56,7 +55,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
         int x = 1 >> 1 << 1 >> 1;
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -84,7 +83,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -122,7 +121,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -145,7 +144,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
         int x = 1 + (1 * 1);
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -158,7 +157,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
         int x = (1 * 1) * 1;
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -197,7 +196,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -246,7 +245,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {

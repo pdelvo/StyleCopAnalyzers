@@ -11,13 +11,12 @@
     public class SA1119UnitTests : CodeFixVerifier<SA1119StatementMustNotUseUnnecessaryParenthesis, SA1119CodeFixProvider>
     {
         private const string DiagnosticId = SA1119StatementMustNotUseUnnecessaryParenthesis.DiagnosticId;
-        protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
 
         [TestMethod]
         public async Task TestEmptySource()
         {
             var testCode = string.Empty;
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -30,7 +29,7 @@
         int x = 1;
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -80,7 +79,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -172,7 +171,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -194,7 +193,7 @@
         int x = ToString();
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -244,7 +243,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -267,7 +266,7 @@
         int x = Local + Local.IndexOf('x');
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -351,7 +350,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -375,7 +374,7 @@
         this.Local = Local;
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -426,7 +425,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -487,7 +486,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -510,7 +509,7 @@
         int x = (int)3;
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -560,7 +559,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -583,7 +582,7 @@
         x = (int)3;
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -634,7 +633,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -657,7 +656,7 @@
         string x = ((int)3).ToString();
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -671,7 +670,7 @@
         x = ((int)3).ToString();
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -690,7 +689,7 @@
         x = -x;
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -911,7 +910,7 @@
                 },
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -940,7 +939,7 @@
         x = 3 * unchecked(5);
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1024,7 +1023,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -1047,7 +1046,7 @@
         string x = nameof(Foo) + ""Bar"";
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1097,7 +1096,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -1119,7 +1118,7 @@
         bool x = "" is string;
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1132,7 +1131,7 @@
         string x = ("""" is string).ToString();
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1216,7 +1215,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -1240,7 +1239,7 @@
         string x = y = ""foo"";
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1291,7 +1290,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -1316,7 +1315,7 @@
         x = (y = ""foo"").ToString();
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1329,7 +1328,7 @@
         string x = true ? ""foo"" : ""bar"";
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1379,7 +1378,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -1402,7 +1401,7 @@
         string x = (true ? ""foo"" : ""bar"").ToString();
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1415,7 +1414,7 @@
         string x = ""foo"" ?? ""bar"";
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1465,7 +1464,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -1488,7 +1487,7 @@
         string x = (""foo"" ?? ""bar"").ToString();
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1502,7 +1501,7 @@
         System.Func<string, string> y = (v) => v;
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1586,7 +1585,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -1610,7 +1609,7 @@
         string y = ((v) => v)(""foo"");
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1623,7 +1622,7 @@
         int[] x = new int[10];
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1673,7 +1672,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -1695,7 +1694,7 @@
         string x = (new int[10]).ToString();
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1708,7 +1707,7 @@
         var x = from y in new int[10] select y + 1;
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1758,7 +1757,7 @@
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
             var fixedCode = @"public class Foo
 {
@@ -1780,7 +1779,7 @@
         var x = (from y in new int[10] select y + 1).ToString();
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1793,7 +1792,7 @@
         var x = (await System.Threading.Tasks.Task.Delay(10).ContinueWith(() => System.Threading.Tasks.Task.FromResult(1))).ToString();
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -1808,7 +1807,7 @@
         var z = 1 * ~(1 + 1);
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]

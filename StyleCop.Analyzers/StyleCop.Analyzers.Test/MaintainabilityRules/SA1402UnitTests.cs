@@ -38,7 +38,7 @@ public partial class Foo
 
 }";
 
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
 
         }
 
@@ -68,7 +68,7 @@ public partial class Bar
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
 
         }
 
@@ -83,7 +83,7 @@ public partial class Bar
     }
 }";
 
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
 
         }
     }

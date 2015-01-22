@@ -13,15 +13,13 @@
     [TestClass]
     public class SA1602UnitTests : DiagnosticVerifier<SA1602EnumerationItemsMustBeDocumented>
     {
-        protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
-
         public string DiagnosticId { get; } = SA1602EnumerationItemsMustBeDocumented.DiagnosticId;
 
         [TestMethod]
         public async Task TestEmptySource()
         {
             var testCode = @"";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -38,7 +36,7 @@ enum TypeName
     /// </summary>
     Bar
 }}";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -67,7 +65,7 @@ enum TypeName
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
         }
 
         [TestMethod]
@@ -102,7 +100,7 @@ enum TypeName
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
         }
     }
 }

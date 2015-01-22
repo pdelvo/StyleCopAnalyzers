@@ -14,7 +14,6 @@
     [TestClass]
     public class SA1000UnitTests : CodeFixVerifier<SA1000KeywordsMustBeSpacedCorrectly, SA1000CodeFixProvider>
     {
-        protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
 
         public string DiagnosticId { get; } = SA1000KeywordsMustBeSpacedCorrectly.DiagnosticId;
 
@@ -22,7 +21,7 @@
         public async Task TestEmptySource()
         {
             var testCode = @"";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticIsEmptyAsync(testCode);
         }
 
         [TestMethod]
@@ -1143,7 +1142,7 @@ default :
 {
 }";
 
-            await VerifyCSharpDiagnosticAsync(statementWithoutSpace, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(statementWithoutSpace, EmptyDiagnosticResults);
 
             DiagnosticResult[] expected;
 
@@ -1177,7 +1176,7 @@ default :
 {
 }";
 
-            await VerifyCSharpDiagnosticAsync(statementWithoutSpace, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(statementWithoutSpace, EmptyDiagnosticResults);
 
             DiagnosticResult[] expected;
 
@@ -1211,7 +1210,7 @@ default :
 {
 }";
 
-            await VerifyCSharpDiagnosticAsync(statementWithoutSpace, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(statementWithoutSpace, EmptyDiagnosticResults);
 
             DiagnosticResult[] expected;
 
@@ -1245,7 +1244,7 @@ default :
 {
 }";
 
-            await VerifyCSharpDiagnosticAsync(statementWithoutSpace, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(statementWithoutSpace, EmptyDiagnosticResults);
 
             DiagnosticResult[] expected;
 
@@ -1279,7 +1278,7 @@ default :
 {
 }";
 
-            await VerifyCSharpDiagnosticAsync(statementWithoutSpace, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(statementWithoutSpace, EmptyDiagnosticResults);
 
             DiagnosticResult[] expected;
 
@@ -1313,7 +1312,7 @@ default :
 {
 }";
 
-            await VerifyCSharpDiagnosticAsync(statementWithoutSpace, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(statementWithoutSpace, EmptyDiagnosticResults);
 
             DiagnosticResult[] expected;
 
@@ -1485,7 +1484,7 @@ default:
             string testCode = string.Format(testCodeFormat, asyncModifier, statement);
             string fixedTest = string.Format(testCodeFormat, asyncModifier, fixedStatement);
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
             await VerifyCSharpFixAsync(testCode, fixedTest, cancellationToken: CancellationToken.None);
         }
     }

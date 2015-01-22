@@ -11,13 +11,12 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
     public class SA1411UnitTests : CodeFixVerifier<SA1411AttributeConstructorMustNotUseUnnecessaryParenthesis, SA1410SA1411CodeFixProvider>
     {
         private const string DiagnosticId = SA1411AttributeConstructorMustNotUseUnnecessaryParenthesis.DiagnosticId;
-        protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
 
         [TestMethod]
         public async Task TestEmptySource()
         {
             var testCode = @"";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -30,7 +29,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
     {
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -43,7 +42,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
     {
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -56,7 +55,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
     {
     }
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -84,7 +83,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
         }
 
         [TestMethod]
@@ -123,7 +122,7 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
                 }
             };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
         }
 
         [TestMethod]

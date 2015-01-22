@@ -50,9 +50,6 @@
         };
         static readonly Tuple<string, string>[] _allTypes = _referenceTypes.Concat(_valueTypes).ToArray();
 
-
-        protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
-
         public string DiagnosticId { get; } = SA1121UseBuiltInTypeAlias.DiagnosticId;
 
         private async Task TestCases(Func<string, string, Task> func, Tuple<string, string>[] types)
@@ -127,7 +124,7 @@
         public async Task TestEmptySource()
         {
             var testCode = @"";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         private async Task TestVariableDeclaration(string predefined, string fullName)
@@ -158,8 +155,8 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, predefined), EmptyDiagnosticResults, CancellationToken.None);
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, predefined), EmptyDiagnosticResults);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected);
         }
 
         [TestMethod]
@@ -211,7 +208,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected);
         }
 
         [TestMethod]
@@ -263,7 +260,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected);
         }
 
         [TestMethod]
@@ -314,7 +311,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected);
         }
 
         [TestMethod]
@@ -364,7 +361,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected);
         }
 
         [TestMethod]
@@ -415,7 +412,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected);
         }
 
         [TestMethod]
@@ -466,7 +463,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected);
         }
 
         [TestMethod]
@@ -540,7 +537,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected);
         }
 
         [TestMethod]
@@ -617,7 +614,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected);
         }
 
         [TestMethod]
@@ -671,7 +668,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected);
         }
 
         [TestMethod]
@@ -723,7 +720,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected);
         }
 
         [TestMethod]
@@ -787,7 +784,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected);
         }
 
         [TestMethod]
@@ -840,7 +837,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected);
         }
 
         [TestMethod]
@@ -892,7 +889,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected);
         }
 
         [TestMethod]
@@ -958,7 +955,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
         }
 
         [TestMethod]
@@ -1028,7 +1025,7 @@ public class Foo
                     }
                 };
 
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
         }
 
         [TestMethod]
@@ -1071,8 +1068,8 @@ public class {0} {{}}
 ";
             foreach (var item in _allTypes)
             {
-                await VerifyCSharpDiagnosticAsync(string.Format(testCode, "@" + item.Item1), EmptyDiagnosticResults, CancellationToken.None);
-                await VerifyCSharpDiagnosticAsync(string.Format(testCode, item.Item2), EmptyDiagnosticResults, CancellationToken.None);
+                await VerifyCSharpDiagnosticAsync(string.Format(testCode, "@" + item.Item1), EmptyDiagnosticResults);
+                await VerifyCSharpDiagnosticAsync(string.Format(testCode, item.Item2), EmptyDiagnosticResults);
             }
         }
 
@@ -1094,8 +1091,8 @@ public namespace {0}
 ";
             foreach (var item in _allTypes)
             {
-                await VerifyCSharpDiagnosticAsync(string.Format(testCode, "@" + item.Item1), EmptyDiagnosticResults, CancellationToken.None);
-                await VerifyCSharpDiagnosticAsync(string.Format(testCode, item.Item2), EmptyDiagnosticResults, CancellationToken.None);
+                await VerifyCSharpDiagnosticAsync(string.Format(testCode, "@" + item.Item1), EmptyDiagnosticResults);
+                await VerifyCSharpDiagnosticAsync(string.Format(testCode, item.Item2), EmptyDiagnosticResults);
             }
         }
 
@@ -1116,7 +1113,7 @@ namespace Foo
 ";
             foreach (var item in _allTypes)
             {
-                await VerifyCSharpDiagnosticAsync(string.Format(testCode, "System." + item.Item2), EmptyDiagnosticResults, CancellationToken.None);
+                await VerifyCSharpDiagnosticAsync(string.Format(testCode, "System." + item.Item2), EmptyDiagnosticResults);
             }
         }
 
@@ -1154,8 +1151,8 @@ namespace Foo
                 };
             foreach (var item in _allTypes)
             {
-                await VerifyCSharpDiagnosticAsync(string.Format(testCode, "System." + item.Item2), expected, CancellationToken.None);
-                await VerifyCSharpDiagnosticAsync(string.Format(testCode, item.Item1), EmptyDiagnosticResults, CancellationToken.None);
+                await VerifyCSharpDiagnosticAsync(string.Format(testCode, "System." + item.Item2), expected);
+                await VerifyCSharpDiagnosticAsync(string.Format(testCode, item.Item1), EmptyDiagnosticResults);
             }
         }
     }

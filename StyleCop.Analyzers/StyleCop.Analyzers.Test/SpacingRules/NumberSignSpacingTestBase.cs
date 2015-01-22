@@ -12,7 +12,6 @@
         where TAnalyzer : DiagnosticAnalyzer, new()
         where TCodeFixProvider : CodeFixProvider, new()
     {
-        protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
 
         protected abstract string Sign
         {
@@ -33,7 +32,7 @@
         public async Task TestEmptySource()
         {
             var testCode = @"";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -81,7 +80,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
             await VerifyCSharpFixAsync(testCode, fixedTest, cancellationToken: CancellationToken.None);
         }
 
@@ -120,7 +119,7 @@
 
             test = string.Format(testFormat, Sign + "3");
             expected = EmptyDiagnosticResults;
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, Sign + " 3");
@@ -139,7 +138,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
         }
 
@@ -178,7 +177,7 @@
 
             test = string.Format(testFormat, Sign + "3");
             expected = EmptyDiagnosticResults;
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, Sign + " 3");
@@ -197,7 +196,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
         }
 
@@ -234,7 +233,7 @@
 
             test = string.Format(testFormat, " " + Sign + "3");
             expected = EmptyDiagnosticResults;
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, Sign + "3");
@@ -253,7 +252,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, " " + Sign + " 3");
@@ -272,7 +271,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, Sign + " 3");
@@ -302,7 +301,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
         }
 
@@ -339,7 +338,7 @@
 
             test = string.Format(testFormat, Sign + "3");
             expected = EmptyDiagnosticResults;
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, Sign + " 3");
@@ -358,7 +357,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
         }
 
@@ -395,7 +394,7 @@
 
             test = string.Format(testFormat, Sign + "3");
             expected = EmptyDiagnosticResults;
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, " " + Sign + "3");
@@ -414,7 +413,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, Sign + " 3");
@@ -433,7 +432,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, " " + Sign + " 3");
@@ -463,7 +462,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
         }
 
@@ -500,7 +499,7 @@
 
             test = string.Format(testFormat, Sign + "3");
             expected = EmptyDiagnosticResults;
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, " " + Sign + "3");
@@ -519,7 +518,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, Sign + " 3");
@@ -538,7 +537,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, " " + Sign + " 3");
@@ -568,7 +567,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
         }
 
@@ -605,7 +604,7 @@
 
             test = string.Format(testFormat, Sign + "3");
             expected = EmptyDiagnosticResults;
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, " " + Sign + "3");
@@ -624,7 +623,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, Sign + " 3");
@@ -643,7 +642,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
 
             test = string.Format(testFormat, " " + Sign + " 3");
@@ -673,7 +672,7 @@
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(test, expected);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
         }
     }

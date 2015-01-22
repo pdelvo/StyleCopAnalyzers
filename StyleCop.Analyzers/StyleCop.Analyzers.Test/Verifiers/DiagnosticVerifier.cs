@@ -17,6 +17,8 @@ namespace TestHelper
     public abstract partial class DiagnosticVerifier<TAnalyzer> 
         where TAnalyzer : DiagnosticAnalyzer, new()
     {
+        protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
+
         #region To be implemented by Test classes
         /// <summary>
         /// Get the C# analyzer being tested - to be implemented in non-abstract class.
@@ -31,6 +33,19 @@ namespace TestHelper
 
         /// <summary>
         /// Called to test a C# <see cref="DiagnosticAnalyzer"/> when applied on the single input source as a string.
+        /// It is checked if the <see cref="DiagnosticAnalyzer"/> does not return any<see cref="DiagnosticResult"/>s.
+        /// <note type="note">
+        /// </note>
+        /// </summary>
+        /// <param name="source">A class in the form of a string to run the analyzer on.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> that the task will observe.</param>
+        protected Task VerifyCSharpDiagnosticIsEmptyAsync(string source, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return VerifyDiagnosticsAsync(new[] { source }, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), EmptyDiagnosticResults, cancellationToken);
+        }
+
+        /// <summary>
+        /// Called to test a C# <see cref="DiagnosticAnalyzer"/> when applied on the single input source as a string.
         /// <note type="note">
         /// <para>Input a <see cref="DiagnosticResult"/> for each <see cref="Diagnostic"/> expected.</para>
         /// </note>
@@ -39,7 +54,7 @@ namespace TestHelper
         /// <param name="expected">A collection of <see cref="DiagnosticResult"/>s describing the
         /// <see cref="Diagnostic"/>s that should be reported by the analyzer for the specified source.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> that the task will observe.</param>
-        protected Task VerifyCSharpDiagnosticAsync(string source, DiagnosticResult[] expected, CancellationToken cancellationToken)
+        protected Task VerifyCSharpDiagnosticAsync(string source, DiagnosticResult[] expected, CancellationToken cancellationToken = default(CancellationToken))
         {
             return VerifyDiagnosticsAsync(new[] { source }, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), expected, cancellationToken);
         }

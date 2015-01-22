@@ -13,15 +13,13 @@
     [TestClass]
     public class SA1607UnitTests : DiagnosticVerifier<SA1607PartialElementDocumentationMustHaveSummaryText>
     {
-        protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
-
         public string DiagnosticId { get; } = SA1607PartialElementDocumentationMustHaveSummaryText.DiagnosticId;
 
         [TestMethod]
         public async Task TestEmptySource()
         {
             var testCode = @"";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         private async Task TestTypeNoDocumentation(string typeName)
@@ -30,7 +28,7 @@
 partial {0} TypeName
 {{
 }}";
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, typeName), EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, typeName), EmptyDiagnosticResults);
         }
 
         private async Task TestTypeWithSummaryDocumentation(string typeName)
@@ -42,7 +40,7 @@ partial {0} TypeName
 partial {0} TypeName
 {{
 }}";
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, typeName), EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, typeName), EmptyDiagnosticResults);
         }
 
         private async Task TestTypeWithContentDocumentation(string typeName)
@@ -54,7 +52,7 @@ partial {0} TypeName
 partial {0} TypeName
 {{
 }}";
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, typeName), EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, typeName), EmptyDiagnosticResults);
         }
 
         private async Task TestTypeWithInheritedDocumentation(string typeName)
@@ -64,7 +62,7 @@ partial {0} TypeName
 partial {0} TypeName
 {{
 }}";
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, typeName), EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, typeName), EmptyDiagnosticResults);
         }
 
         private async Task TestTypeWithoutSummaryDocumentation(string typeName)
@@ -95,7 +93,7 @@ TypeName
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, typeName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, typeName), expected);
         }
 
         private async Task TestTypeWithoutContentDocumentation(string typeName)
@@ -126,7 +124,7 @@ TypeName
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(string.Format(testCode, typeName), expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(string.Format(testCode, typeName), expected);
         }
 
         [TestMethod]
@@ -248,7 +246,7 @@ public class ClassName
 {
     partial void Test();
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -265,7 +263,7 @@ public class ClassName
     /// </summary>
     partial void Test();
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -282,7 +280,7 @@ public class ClassName
     /// </content>
     partial void Test();
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -297,7 +295,7 @@ public class ClassName
     /// <inheritdoc/>
     partial void Test();
 }";
-            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults);
         }
 
         [TestMethod]
@@ -332,7 +330,7 @@ public class ClassName
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
         }
 
         [TestMethod]
@@ -367,7 +365,7 @@ public class ClassName
                             }
                     }
                 };
-            await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
+            await VerifyCSharpDiagnosticAsync(testCode, expected);
         }
     }
 }
