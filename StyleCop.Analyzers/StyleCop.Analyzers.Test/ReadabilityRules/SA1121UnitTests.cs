@@ -4,10 +4,8 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CodeFixes;
-    using Microsoft.CodeAnalysis.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using StyleCop.Analyzers.ReadabilityRules;
+    using Analyzers.ReadabilityRules;
     using TestHelper;
     using System;
 
@@ -16,7 +14,7 @@
     /// This class contains unit tests for <see cref="SA1121UseBuiltInTypeAlias"/>
     /// </summary>
     [TestClass]
-    public class SA1121UnitTests : CodeFixVerifier
+    public class SA1121UnitTests : CodeFixVerifier<SA1121UseBuiltInTypeAlias, SA1121CodeFixProvider>
     {
         static readonly Tuple<string, string>[] _referenceTypes = new Tuple<string, string>[]
         {
@@ -1159,16 +1157,6 @@ namespace Foo
                 await VerifyCSharpDiagnosticAsync(string.Format(testCode, "System." + item.Item2), expected, CancellationToken.None);
                 await VerifyCSharpDiagnosticAsync(string.Format(testCode, item.Item1), EmptyDiagnosticResults, CancellationToken.None);
             }
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1121UseBuiltInTypeAlias();
-        }
-
-        protected override CodeFixProvider GetCSharpCodeFixProvider()
-        {
-            return new SA1121CodeFixProvider();
         }
     }
 }

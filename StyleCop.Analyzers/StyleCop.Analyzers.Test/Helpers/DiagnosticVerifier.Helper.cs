@@ -15,7 +15,8 @@ namespace TestHelper
     /// Class for turning strings into documents and getting the diagnostics on them.
     /// All methods are static.
     /// </summary>
-    public abstract partial class DiagnosticVerifier
+    public abstract partial class DiagnosticVerifier<TAnalyzer>
+        where TAnalyzer : DiagnosticAnalyzer, new()
     {
         private static readonly MetadataReference CorlibReference = MetadataReference.CreateFromAssembly(typeof(object).Assembly);
         private static readonly MetadataReference SystemReference = MetadataReference.CreateFromAssembly(typeof(System.Diagnostics.Debug).Assembly);
@@ -25,9 +26,7 @@ namespace TestHelper
 
         internal static string DefaultFilePathPrefix = "Test";
         internal static string CSharpDefaultFileExt = "cs";
-        internal static string VisualBasicDefaultExt = "vb";
         internal static string CSharpDefaultFilePath = DefaultFilePathPrefix + 0 + "." + CSharpDefaultFileExt;
-        internal static string VisualBasicDefaultFilePath = DefaultFilePathPrefix + 0 + "." + VisualBasicDefaultExt;
         internal static string TestProjectName = "TestProject";
 
         #region  Get Diagnostics
@@ -166,7 +165,7 @@ namespace TestHelper
         private static Project CreateProject(string[] sources, string language = LanguageNames.CSharp)
         {
             string fileNamePrefix = DefaultFilePathPrefix;
-            string fileExt = language == LanguageNames.CSharp ? CSharpDefaultFileExt : VisualBasicDefaultExt;
+            string fileExt = CSharpDefaultFileExt;
 
             var projectId = ProjectId.CreateNewId(debugName: TestProjectName);
 

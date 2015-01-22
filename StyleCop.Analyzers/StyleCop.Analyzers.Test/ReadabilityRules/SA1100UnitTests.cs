@@ -1,17 +1,14 @@
-﻿using Microsoft.CodeAnalysis.CodeFixes;
-
-namespace StyleCop.Analyzers.Test.ReadabilityRules
+﻿namespace StyleCop.Analyzers.Test.ReadabilityRules
 {
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using StyleCop.Analyzers.ReadabilityRules;
+    using Analyzers.ReadabilityRules;
     using TestHelper;
 
     [TestClass]
-    public class SA1100UnitTests : CodeFixVerifier
+    public class SA1100UnitTests : CodeFixVerifier<SA1100DoNotPrefixCallsWithBaseUnlessLocalImplementationExists, SA1100CodeFixProvider>
     {
         private const string DiagnosticId = SA1100DoNotPrefixCallsWithBaseUnlessLocalImplementationExists.DiagnosticId;
         protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
@@ -1261,16 +1258,6 @@ public class Foo
     }
 }";
             await VerifyCSharpFixAsync(testCode, fixedTest, cancellationToken: CancellationToken.None);
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1100DoNotPrefixCallsWithBaseUnlessLocalImplementationExists();
-        }
-
-        protected override CodeFixProvider GetCSharpCodeFixProvider()
-        {
-            return new SA1100CodeFixProvider();
         }
     }
 }

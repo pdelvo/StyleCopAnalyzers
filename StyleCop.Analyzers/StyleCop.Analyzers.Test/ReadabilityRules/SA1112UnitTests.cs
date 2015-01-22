@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StyleCop.Analyzers.ReadabilityRules;
 using TestHelper;
@@ -9,7 +8,7 @@ using TestHelper;
 namespace StyleCop.Analyzers.Test.ReadabilityRules
 {
     [TestClass]
-    public class SA1112UnitTests : CodeFixVerifier
+    public class SA1112UnitTests : DiagnosticVerifier<SA1112ClosingParenthesisMustBeOnLineOfOpeningParenthesis>
     {
 
         protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
@@ -313,11 +312,6 @@ public class Foo
 }";
 
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1112ClosingParenthesisMustBeOnLineOfOpeningParenthesis();
         }
     }
 }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StyleCop.Analyzers.MaintainabilityRules;
 using TestHelper;
@@ -10,7 +8,7 @@ using TestHelper;
 namespace StyleCop.Analyzers.Test.MaintainabilityRules
 {
     [TestClass]
-    public class SA1403UnitTests : FileMayOnlyContainTestBase
+    public class SA1403UnitTests : FileMayOnlyContainTestBase<SA1403FileMayOnlyContainASingleNamespace>
     {
         public override string Keyword
         {
@@ -56,11 +54,6 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
 
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
 
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1403FileMayOnlyContainASingleNamespace();
         }
     }
 }

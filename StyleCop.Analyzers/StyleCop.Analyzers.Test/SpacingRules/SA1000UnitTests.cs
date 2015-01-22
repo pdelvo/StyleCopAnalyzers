@@ -3,10 +3,8 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CodeFixes;
-    using Microsoft.CodeAnalysis.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using StyleCop.Analyzers.SpacingRules;
+    using Analyzers.SpacingRules;
     using TestHelper;
 
     /// <summary>
@@ -14,7 +12,7 @@
     /// <see cref="SA1000CodeFixProvider"/>.
     /// </summary>
     [TestClass]
-    public class SA1000UnitTests : CodeFixVerifier
+    public class SA1000UnitTests : CodeFixVerifier<SA1000KeywordsMustBeSpacedCorrectly, SA1000CodeFixProvider>
     {
         protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
 
@@ -1489,16 +1487,6 @@ default:
 
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
             await VerifyCSharpFixAsync(testCode, fixedTest, cancellationToken: CancellationToken.None);
-        }
-
-        protected override CodeFixProvider GetCSharpCodeFixProvider()
-        {
-            return new SA1000CodeFixProvider();
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1000KeywordsMustBeSpacedCorrectly();
         }
     }
 }

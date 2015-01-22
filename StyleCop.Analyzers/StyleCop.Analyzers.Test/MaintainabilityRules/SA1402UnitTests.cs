@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StyleCop.Analyzers.MaintainabilityRules;
 using TestHelper;
@@ -10,7 +8,7 @@ using TestHelper;
 namespace StyleCop.Analyzers.Test.MaintainabilityRules
 {
     [TestClass]
-    public class SA1402UnitTests : FileMayOnlyContainTestBase
+    public class SA1402UnitTests : FileMayOnlyContainTestBase<SA1402FileMayOnlyContainASingleClass>
     {
 
         public override string Keyword
@@ -27,11 +25,6 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
             {
                 return SA1402FileMayOnlyContainASingleClass.DiagnosticId;
             }
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1402FileMayOnlyContainASingleClass();
         }
 
         [TestMethod]

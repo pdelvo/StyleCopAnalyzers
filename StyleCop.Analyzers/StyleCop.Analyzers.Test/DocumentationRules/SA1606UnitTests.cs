@@ -3,17 +3,15 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CodeFixes;
-    using Microsoft.CodeAnalysis.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using StyleCop.Analyzers.DocumentationRules;
+    using Analyzers.DocumentationRules;
     using TestHelper;
 
     /// <summary>
     /// This class contains unit tests for <see cref="SA1606ElementDocumentationMustHaveSummaryText"/>-
     /// </summary>
     [TestClass]
-    public class SA1606UnitTests : CodeFixVerifier
+    public class SA1606UnitTests : DiagnosticVerifier<SA1606ElementDocumentationMustHaveSummaryText>
     {
         protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
 
@@ -913,11 +911,6 @@ public interface InterfaceName
                     }
                 };
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1606ElementDocumentationMustHaveSummaryText();
         }
     }
 }

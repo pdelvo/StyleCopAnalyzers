@@ -12,24 +12,18 @@ namespace TestHelper
 {
     /// <summary>
     /// Superclass of all unit tests for <see cref="DiagnosticAnalyzer"/>s.
+    /// <typeparam name="TAnalyzer">The analyzer used in this test.</typeparam>
     /// </summary>
-    public abstract partial class DiagnosticVerifier
+    public abstract partial class DiagnosticVerifier<TAnalyzer> 
+        where TAnalyzer : DiagnosticAnalyzer, new()
     {
         #region To be implemented by Test classes
         /// <summary>
         /// Get the C# analyzer being tested - to be implemented in non-abstract class.
         /// </summary>
-        protected virtual DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
+        protected DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return null;
-        }
-
-        /// <summary>
-        /// Get the Visual Basic analyzer being tested - to be implemented in non-abstract class.
-        /// </summary>
-        protected virtual DiagnosticAnalyzer GetBasicDiagnosticAnalyzer()
-        {
-            return null;
+            return new TAnalyzer();
         }
         #endregion
 
@@ -51,22 +45,6 @@ namespace TestHelper
         }
 
         /// <summary>
-        /// Called to test a Visual Basic <see cref="DiagnosticAnalyzer"/> when applied on the single input source as a
-        /// string.
-        /// <note type="note">
-        /// <para>Input a <see cref="DiagnosticResult"/> for each <see cref="Diagnostic"/> expected.</para>
-        /// </note>
-        /// </summary>
-        /// <param name="source">A class in the form of a string to run the analyzer on.</param>
-        /// <param name="expected">A collection of <see cref="DiagnosticResult"/>s describing the
-        /// <see cref="Diagnostic"/>s that should be reported by the analyzer for the specified source.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> that the task will observe.</param>
-        protected Task VerifyBasicDiagnosticAsync(string source, DiagnosticResult[] expected, CancellationToken cancellationToken)
-        {
-            return VerifyDiagnosticsAsync(new[] { source }, LanguageNames.VisualBasic, GetBasicDiagnosticAnalyzer(), expected, cancellationToken);
-        }
-
-        /// <summary>
         /// Called to test a C# <see cref="DiagnosticAnalyzer"/> when applied on the input strings as sources.
         /// <note type="note">
         /// <para>Input a <see cref="DiagnosticResult"/> for each <see cref="Diagnostic"/> expected.</para>
@@ -80,22 +58,6 @@ namespace TestHelper
         protected Task VerifyCSharpDiagnosticAsync(string[] sources, DiagnosticResult[] expected, CancellationToken cancellationToken)
         {
             return VerifyDiagnosticsAsync(sources, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), expected, cancellationToken);
-        }
-
-        /// <summary>
-        /// Called to test a Visual Basic <see cref="DiagnosticAnalyzer"/> when applied on the input strings as sources.
-        /// <note type="note">
-        /// <para>Input a <see cref="DiagnosticResult"/> for each <see cref="Diagnostic"/> expected.</para>
-        /// </note>
-        /// </summary>
-        /// <param name="sources">A collection of strings to create source documents from to run the analyzers
-        /// on.</param>
-        /// <param name="expected">A collection of <see cref="DiagnosticResult"/>s describing the
-        /// <see cref="Diagnostic"/>s that should be reported by the analyzer for the specified sources.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> that the task will observe.</param>
-        protected Task VerifyBasicDiagnosticAsync(string[] sources, DiagnosticResult[] expected, CancellationToken cancellationToken)
-        {
-            return VerifyDiagnosticsAsync(sources, LanguageNames.VisualBasic, GetBasicDiagnosticAnalyzer(), expected, cancellationToken);
         }
 
         /// <summary>

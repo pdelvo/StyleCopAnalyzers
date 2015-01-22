@@ -3,12 +3,11 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using Microsoft.CodeAnalysis.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using StyleCop.Analyzers.MaintainabilityRules;
+    using Analyzers.MaintainabilityRules;
 
     [TestClass]
-    public class SA1406UnitTests : DebugMessagesUnitTestsBase
+    public class SA1406UnitTests : DebugMessagesUnitTestsBase<SA1406DebugFailMustProvideMessageText>
     {
         protected override string DiagnosticId
         {
@@ -32,11 +31,6 @@
             {
                 return Enumerable.Empty<string>();
             }
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1406DebugFailMustProvideMessageText();
         }
     }
 }

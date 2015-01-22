@@ -1,8 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StyleCop.Analyzers.MaintainabilityRules;
 using TestHelper;
@@ -10,7 +8,7 @@ using TestHelper;
 namespace StyleCop.Analyzers.Test.MaintainabilityRules
 {
     [TestClass]
-    public class SA1410UnitTests : CodeFixVerifier
+    public class SA1410UnitTests : CodeFixVerifier<SA1410RemoveDelegateParenthesisWhenPossible, SA1410SA1411CodeFixProvider>
     {
         private const string DiagnosticId = SA1410RemoveDelegateParenthesisWhenPossible.DiagnosticId;
         protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
@@ -96,16 +94,6 @@ namespace StyleCop.Analyzers.Test.MaintainabilityRules
 }";
 
             await VerifyCSharpFixAsync(oldSource, newSource, cancellationToken: CancellationToken.None);
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1410RemoveDelegateParenthesisWhenPossible();
-        }
-
-        protected override CodeFixProvider GetCSharpCodeFixProvider()
-        {
-            return new SA1410SA1411CodeFixProvider();
         }
     }
 }

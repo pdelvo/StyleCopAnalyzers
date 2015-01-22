@@ -3,10 +3,8 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CodeFixes;
-    using Microsoft.CodeAnalysis.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using StyleCop.Analyzers.ReadabilityRules;
+    using Analyzers.ReadabilityRules;
     using TestHelper;
 
     /// <summary>
@@ -14,7 +12,7 @@
     /// <see cref="SA1122CodeFixProvider"/>.
     /// </summary>
     [TestClass]
-    public class SA1122UnitTests : CodeFixVerifier
+    public class SA1122UnitTests : CodeFixVerifier<SA1122UseStringEmptyForEmptyStrings, SA1122CodeFixProvider>
     {
         protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
 
@@ -225,16 +223,6 @@ public class Foo
         public async Task TestLiteralInMethodCodeFix()
         {
             await TestSimpleCodeFix(false);
-        }
-
-        protected override CodeFixProvider GetCSharpCodeFixProvider()
-        {
-            return new SA1122CodeFixProvider();
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1122UseStringEmptyForEmptyStrings();
         }
     }
 }

@@ -3,14 +3,12 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CodeFixes;
-    using Microsoft.CodeAnalysis.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Analyzers.MaintainabilityRules;
     using TestHelper;
 
     [TestClass]
-    public class SA1119UnitTests : CodeFixVerifier
+    public class SA1119UnitTests : CodeFixVerifier<SA1119StatementMustNotUseUnnecessaryParenthesis, SA1119CodeFixProvider>
     {
         private const string DiagnosticId = SA1119StatementMustNotUseUnnecessaryParenthesis.DiagnosticId;
         protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
@@ -1853,16 +1851,6 @@
 // Foo
 #endif";
             await VerifyCSharpFixAsync(testCode, fixedCode);
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1119StatementMustNotUseUnnecessaryParenthesis();
-        }
-
-        protected override CodeFixProvider GetCSharpCodeFixProvider()
-        {
-            return new SA1119CodeFixProvider();
         }
     }
 }

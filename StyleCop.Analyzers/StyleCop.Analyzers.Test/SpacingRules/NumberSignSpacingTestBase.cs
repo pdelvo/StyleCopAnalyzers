@@ -8,7 +8,9 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TestHelper;
 
-    public abstract class NumberSignSpacingTestBase : CodeFixVerifier
+    public abstract class NumberSignSpacingTestBase<TAnalyzer, TCodeFixProvider> : CodeFixVerifier<TAnalyzer, TCodeFixProvider>
+        where TAnalyzer : DiagnosticAnalyzer, new()
+        where TCodeFixProvider : CodeFixProvider, new()
     {
         protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
 
@@ -674,9 +676,5 @@
             await VerifyCSharpDiagnosticAsync(test, expected, CancellationToken.None);
             await VerifyCSharpFixAsync(test, fixedTest, cancellationToken: CancellationToken.None);
         }
-
-        protected override abstract CodeFixProvider GetCSharpCodeFixProvider();
-
-        protected override abstract DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer();
     }
 }

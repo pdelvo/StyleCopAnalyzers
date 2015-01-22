@@ -1,20 +1,26 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.Simplification;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Immutable;
-
-namespace TestHelper
+﻿namespace TestHelper
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Collections.Immutable;
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CodeActions;
+    using Microsoft.CodeAnalysis.Formatting;
+    using Microsoft.CodeAnalysis.Simplification;
+    using Microsoft.CodeAnalysis.CodeFixes;
+    using Microsoft.CodeAnalysis.Diagnostics;
+
     /// <summary>
     /// Diagnostic Producer class with extra methods dealing with applying code fixes.
     /// All methods are static
+    /// <typeparam name="TAnalyzer">The analyzer used in this test.</typeparam>
+    /// <typeparam name="TCodeFixProvider">The code fix provider used in this test.</typeparam>
     /// </summary>
-    public abstract partial class CodeFixVerifier : DiagnosticVerifier
+    public abstract partial class CodeFixVerifier<TAnalyzer, TCodeFixProvider> : DiagnosticVerifier<TAnalyzer>
+        where TAnalyzer : DiagnosticAnalyzer, new()
+        where TCodeFixProvider : CodeFixProvider, new()
     {
         /// <summary>
         /// Apply the inputted <see cref="CodeAction"/> to the inputted document.

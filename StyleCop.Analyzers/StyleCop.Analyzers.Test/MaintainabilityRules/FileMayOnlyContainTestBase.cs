@@ -3,10 +3,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
 using System.Threading.Tasks;
 using TestHelper;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace StyleCop.Analyzers.Test.MaintainabilityRules
 {
-    public abstract class FileMayOnlyContainTestBase : CodeFixVerifier
+    public abstract class FileMayOnlyContainTestBase<TAnalyzer> : DiagnosticVerifier<TAnalyzer>
+        where TAnalyzer : DiagnosticAnalyzer, new()
     {
         public abstract string Keyword { get; }
         public abstract string DiagnosticId { get; }

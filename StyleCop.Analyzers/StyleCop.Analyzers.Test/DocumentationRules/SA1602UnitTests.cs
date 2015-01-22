@@ -3,17 +3,15 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CodeFixes;
-    using Microsoft.CodeAnalysis.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using StyleCop.Analyzers.DocumentationRules;
+    using Analyzers.DocumentationRules;
     using TestHelper;
 
     /// <summary>
     /// This class contains unit tests for <see cref="SA1602EnumerationItemsMustBeDocumented"/>-
     /// </summary>
     [TestClass]
-    public class SA1602UnitTests : CodeFixVerifier
+    public class SA1602UnitTests : DiagnosticVerifier<SA1602EnumerationItemsMustBeDocumented>
     {
         protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
 
@@ -105,11 +103,6 @@ enum TypeName
                     }
                 };
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1602EnumerationItemsMustBeDocumented();
         }
     }
 }

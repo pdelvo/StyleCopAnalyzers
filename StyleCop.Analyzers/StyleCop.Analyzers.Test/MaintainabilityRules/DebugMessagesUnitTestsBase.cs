@@ -5,10 +5,13 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TestHelper;
 
-    public abstract class DebugMessagesUnitTestsBase : CodeFixVerifier
+    public abstract class DebugMessagesUnitTestsBase<TAnalyzer> : DiagnosticVerifier<TAnalyzer>
+        where TAnalyzer : DiagnosticAnalyzer, new()
+
     {
         protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
 

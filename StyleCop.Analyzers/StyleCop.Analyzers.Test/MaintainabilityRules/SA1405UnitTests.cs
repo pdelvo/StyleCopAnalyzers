@@ -5,13 +5,12 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using StyleCop.Analyzers.MaintainabilityRules;
+    using Analyzers.MaintainabilityRules;
     using TestHelper;
 
     [TestClass]
-    public class SA1405UnitTests : DebugMessagesUnitTestsBase
+    public class SA1405UnitTests : DebugMessagesUnitTestsBase<SA1405DebugAssertMustProvideMessageText>
     {
         protected override string DiagnosticId
         {
@@ -65,11 +64,6 @@ public class Foo
             };
 
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1405DebugAssertMustProvideMessageText();
         }
     }
 }

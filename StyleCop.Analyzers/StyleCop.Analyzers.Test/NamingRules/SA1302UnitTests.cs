@@ -1,16 +1,14 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StyleCop.Analyzers.MaintainabilityRules;
 using StyleCop.Analyzers.NamingRules;
 using TestHelper;
 
 namespace StyleCop.Analyzers.Test.NamingRules
 {
     [TestClass]
-    public class SA1302UnitTests : CodeFixVerifier
+    public class SA1302UnitTests : DiagnosticVerifier<SA1302InterfaceNamesMustBeginWithI>
     {
         private const string DiagnosticId = SA1302InterfaceNamesMustBeginWithI.DiagnosticId;
         protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
@@ -188,11 +186,6 @@ public class MyNativeMethods
 }";
 
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1302InterfaceNamesMustBeginWithI();
         }
     }
 }

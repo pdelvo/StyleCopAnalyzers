@@ -3,17 +3,15 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CodeFixes;
-    using Microsoft.CodeAnalysis.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using StyleCop.Analyzers.DocumentationRules;
+    using Analyzers.DocumentationRules;
     using TestHelper;
 
     /// <summary>
     /// This class contains unit tests for <see cref="SA1601PartialElementsMustBeDocumented"/>-
     /// </summary>
     [TestClass]
-    public class SA1601UnitTests : CodeFixVerifier
+    public class SA1601UnitTests : DiagnosticVerifier<SA1601PartialElementsMustBeDocumented>
     {
         protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
 
@@ -190,11 +188,6 @@ public partial class TypeName
                 };
 
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1601PartialElementsMustBeDocumented();
         }
     }
 }

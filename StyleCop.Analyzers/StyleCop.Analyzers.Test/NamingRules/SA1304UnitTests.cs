@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StyleCop.Analyzers.NamingRules;
 using TestHelper;
@@ -9,7 +8,7 @@ using TestHelper;
 namespace StyleCop.Analyzers.Test.NamingRules
 {
     [TestClass]
-    public class SA1304UnitTests : CodeFixVerifier
+    public class SA1304UnitTests : DiagnosticVerifier<SA1304NonPrivateReadonlyFieldsMustBeginWithUpperCaseLetter>
     {
         private const string DiagnosticId = SA1304NonPrivateReadonlyFieldsMustBeginWithUpperCaseLetter.DiagnosticId;
         protected static readonly DiagnosticResult[] EmptyDiagnosticResults = { };
@@ -199,11 +198,6 @@ namespace StyleCop.Analyzers.Test.NamingRules
 }";
 
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1304NonPrivateReadonlyFieldsMustBeginWithUpperCaseLetter();
         }
     }
 }

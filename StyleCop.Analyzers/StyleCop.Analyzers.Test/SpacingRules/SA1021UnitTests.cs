@@ -1,12 +1,10 @@
 ﻿namespace StyleCop.Analyzers.Test.SpacingRules
 {
-    using Microsoft.CodeAnalysis.CodeFixes;
-    using Microsoft.CodeAnalysis.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using StyleCop.Analyzers.SpacingRules;
+    using Analyzers.SpacingRules;
 
     [TestClass]
-    public class SA1021UnitTests : NumberSignSpacingTestBase
+    public class SA1021UnitTests : NumberSignSpacingTestBase<SA1021NegativeSignsMustBeSpacedCorrectly, SA1021CodeFixProvider>
     {
         protected override string DiagnosticId
         {
@@ -30,16 +28,6 @@
             {
                 return "Negative";
             }
-        }
-
-        protected override CodeFixProvider GetCSharpCodeFixProvider()
-        {
-            return new SA1021CodeFixProvider();
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new SA1021NegativeSignsMustBeSpacedCorrectly();
         }
     }
 }
