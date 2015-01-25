@@ -5,19 +5,19 @@
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CodeFixes;
     using Microsoft.CodeAnalysis.Diagnostics;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using StyleCop.Analyzers.DocumentationRules;
     using TestHelper;
+    using Xunit;
+
 
     /// <summary>
     /// This class contains unit tests for <see cref="SA1600ElementsMustBeDocumented"/>-
     /// </summary>
-    [TestClass]
     public class SA1600UnitTests : CodeFixVerifier
     {
         public string DiagnosticId { get; } = SA1600ElementsMustBeDocumented.DiagnosticId;
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptySource()
         {
             var testCode = string.Empty;
@@ -184,7 +184,7 @@ public class OuterClass
             await VerifyCSharpDiagnosticAsync(string.Format(hasDocumentation ? testCodeWithDocumentation : testCodeWithoutDocumentation, modifiers), requiresDiagnostic ? expected : EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        private async Task TestMethodDeclarationDocumentation(string modifiers, bool isExplicitInterfaceMethod, bool requiresDiagnostic, bool hasDocumentation)
+        private async Task FactDeclarationDocumentation(string modifiers, bool isExplicitInterfaceMethod, bool requiresDiagnostic, bool hasDocumentation)
         {
             var testCodeWithoutDocumentation = @"    /// <summary>
     /// A summary
@@ -770,54 +770,54 @@ public class OuterClass
         }
 
 
-        [TestMethod]
+        [Fact]
         public async Task TestClassWithoutDocumentation()
         {
             await TestTypeWithoutDocumentation("class");
         }
-        [TestMethod]
+        [Fact]
         public async Task TestStructWithoutDocumentation()
         {
             await TestTypeWithoutDocumentation("struct");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestEnumWithoutDocumentation()
         {
             await TestTypeWithoutDocumentation("enum");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInterfaceWithoutDocumentation()
         {
             await TestTypeWithoutDocumentation("interface");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestClassWithDocumentation()
         {
             await TestTypeWithDocumentation("class");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStructWithDocumentation()
         {
             await TestTypeWithDocumentation("struct");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestEnumWithDocumentation()
         {
             await TestTypeWithoutDocumentation("enum");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInterfaceWithDocumentation()
         {
             await TestTypeWithoutDocumentation("interface");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestDelegateWithoutDocumentation()
         {
             await TestDelegateDeclarationDocumentation(string.Empty, true, false);
@@ -832,7 +832,7 @@ public class OuterClass
             await TestNestedDelegateDeclarationDocumentation("public", true, false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestDelegateWithDocumentation()
         {
             await TestDelegateDeclarationDocumentation(string.Empty, false, true);
@@ -847,35 +847,35 @@ public class OuterClass
             await TestDelegateDeclarationDocumentation("public", false, true);
         }
 
-        [TestMethod]
-        public async Task TestMethodWithoutDocumentation()
+        [Fact]
+        public async Task FactWithoutDocumentation()
         {
-            await TestMethodDeclarationDocumentation(string.Empty, false, false, false);
-            await TestMethodDeclarationDocumentation(string.Empty, true, true, false);
-            await TestMethodDeclarationDocumentation("private", false, false, false);
-            await TestMethodDeclarationDocumentation("protected", false, true, false);
-            await TestMethodDeclarationDocumentation("internal", false, true, false);
-            await TestMethodDeclarationDocumentation("protected internal", false, true, false);
-            await TestMethodDeclarationDocumentation("public", false, true, false);
+            await FactDeclarationDocumentation(string.Empty, false, false, false);
+            await FactDeclarationDocumentation(string.Empty, true, true, false);
+            await FactDeclarationDocumentation("private", false, false, false);
+            await FactDeclarationDocumentation("protected", false, true, false);
+            await FactDeclarationDocumentation("internal", false, true, false);
+            await FactDeclarationDocumentation("protected internal", false, true, false);
+            await FactDeclarationDocumentation("public", false, true, false);
 
             await TestInterfaceMethodDeclarationDocumentation(false);
         }
 
-        [TestMethod]
-        public async Task TestMethodWithDocumentation()
+        [Fact]
+        public async Task FactWithDocumentation()
         {
-            await TestMethodDeclarationDocumentation(string.Empty, false, false, true);
-            await TestMethodDeclarationDocumentation(string.Empty, true, false, true);
-            await TestMethodDeclarationDocumentation("private", false, false, true);
-            await TestMethodDeclarationDocumentation("protected", false, false, true);
-            await TestMethodDeclarationDocumentation("internal", false, false, true);
-            await TestMethodDeclarationDocumentation("protected internal", false, false, true);
-            await TestMethodDeclarationDocumentation("public", false, false, true);
+            await FactDeclarationDocumentation(string.Empty, false, false, true);
+            await FactDeclarationDocumentation(string.Empty, true, false, true);
+            await FactDeclarationDocumentation("private", false, false, true);
+            await FactDeclarationDocumentation("protected", false, false, true);
+            await FactDeclarationDocumentation("internal", false, false, true);
+            await FactDeclarationDocumentation("protected internal", false, false, true);
+            await FactDeclarationDocumentation("public", false, false, true);
 
             await TestInterfaceMethodDeclarationDocumentation(true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstructorWithoutDocumentation()
         {
             await TestConstructorDeclarationDocumentation(string.Empty, false, false);
@@ -886,7 +886,7 @@ public class OuterClass
             await TestConstructorDeclarationDocumentation("public", true, false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstructorWithDocumentation()
         {
             await TestConstructorDeclarationDocumentation(string.Empty, false, true);
@@ -897,19 +897,19 @@ public class OuterClass
             await TestConstructorDeclarationDocumentation("public", false, true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestDestructorWithoutDocumentation()
         {
             await TestDestructorDeclarationDocumentation(true, false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestDestructorWithDocumentation()
         {
             await TestDestructorDeclarationDocumentation(false, true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestFieldWithoutDocumentation()
         {
             await TestFieldDeclarationDocumentation(string.Empty, false, false);
@@ -920,7 +920,7 @@ public class OuterClass
             await TestFieldDeclarationDocumentation("public", true, false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestFieldWithDocumentation()
         {
             await TestFieldDeclarationDocumentation(string.Empty, false, true);
@@ -931,7 +931,7 @@ public class OuterClass
             await TestFieldDeclarationDocumentation("public", false, true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestPropertyWithoutDocumentation()
         {
             await TestPropertyDeclarationDocumentation(string.Empty, false, false, false);
@@ -945,7 +945,7 @@ public class OuterClass
             await TestInterfacePropertyDeclarationDocumentation(false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestPropertyWithDocumentation()
         {
             await TestPropertyDeclarationDocumentation(string.Empty, false, false, true);
@@ -959,7 +959,7 @@ public class OuterClass
             await TestInterfacePropertyDeclarationDocumentation(true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestIndexerWithoutDocumentation()
         {
             await TestIndexerDeclarationDocumentation(string.Empty, false, false, false);
@@ -973,7 +973,7 @@ public class OuterClass
             await TestInterfaceIndexerDeclarationDocumentation(false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestIndexerWithDocumentation()
         {
             await TestIndexerDeclarationDocumentation(string.Empty, false, false, true);
@@ -987,7 +987,7 @@ public class OuterClass
             await TestInterfaceIndexerDeclarationDocumentation(true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestEventWithoutDocumentation()
         {
             await TestEventDeclarationDocumentation(string.Empty, false, false, false);
@@ -1001,7 +1001,7 @@ public class OuterClass
             await TestInterfaceEventDeclarationDocumentation(false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestEventWithDocumentation()
         {
             await TestEventDeclarationDocumentation(string.Empty, false, false, true);
@@ -1015,7 +1015,7 @@ public class OuterClass
             await TestInterfaceEventDeclarationDocumentation(true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestEventFieldWithoutDocumentation()
         {
             await TestEventFieldDeclarationDocumentation(string.Empty, false, false);
@@ -1026,7 +1026,7 @@ public class OuterClass
             await TestEventFieldDeclarationDocumentation("public", true, false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestEventFieldWithDocumentation()
         {
             await TestEventFieldDeclarationDocumentation(string.Empty, false, true);
@@ -1037,7 +1037,7 @@ public class OuterClass
             await TestEventFieldDeclarationDocumentation("public", false, true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptyXmlComments()
         {
             var testCodeWithEmptyDocumentation = @"    /// <summary>
@@ -1074,7 +1074,7 @@ public class OuterClass
             await VerifyCSharpDiagnosticAsync(testCodeWithEmptyDocumentation, expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestCDataXmlComments()
         {
             var testCodeWithEmptyDocumentation = @"/// <summary>
@@ -1112,7 +1112,7 @@ public class OuterClass
             await VerifyCSharpDiagnosticAsync(testCodeWithEmptyDocumentation, expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptyElementXmlComments()
         {
             var testCodeWithDocumentation = @"/// <inheritdoc/>
@@ -1123,7 +1123,7 @@ public class OuterClass
             await VerifyCSharpDiagnosticAsync(testCodeWithDocumentation, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestMultiLineDocumentation()
         {
             var testCodeWithDocumentation = @"/**

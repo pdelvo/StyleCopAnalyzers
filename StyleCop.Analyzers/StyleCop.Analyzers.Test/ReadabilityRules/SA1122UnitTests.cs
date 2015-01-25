@@ -5,7 +5,7 @@
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CodeFixes;
     using Microsoft.CodeAnalysis.Diagnostics;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
     using StyleCop.Analyzers.ReadabilityRules;
     using TestHelper;
 
@@ -13,12 +13,11 @@
     /// This class contains unit tests for <see cref="SA1122UseStringEmptyForEmptyStrings"/> and
     /// <see cref="SA1122CodeFixProvider"/>.
     /// </summary>
-    [TestClass]
     public class SA1122UnitTests : CodeFixVerifier
     {
         public string DiagnosticId { get; } = SA1122UseStringEmptyForEmptyStrings.DiagnosticId;
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptySource()
         {
             var testCode = string.Empty;
@@ -54,7 +53,7 @@
 
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, useVerbatimLiteral ? "@" : string.Empty), expected, CancellationToken.None);
         }
-        private async Task TestLocalStringLiteral(bool useVerbatimLiteral, bool isConst)
+        private async Task TestLocalStringLiteralInternal(bool useVerbatimLiteral, bool isConst)
         {
             var testCode = @"public class Foo
 {{
@@ -96,7 +95,7 @@ string test = {0}"""";
         }
 
         
-        private async Task TestAttributeStringLiteral(bool useVerbatimLiteral)
+        private async Task TestAttributeStringLiteralInternal(bool useVerbatimLiteral)
         {
             var testCode = @"using System.Diagnostics.CodeAnalysis;
 public class Foo
@@ -142,7 +141,7 @@ public class Foo
             await VerifyCSharpFixAsync(string.Format(oldSource, useVerbatimLiteral ? "@" : string.Empty), newSource);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestCodeFixMultipleNodes()
         {
             // Tests if the code fix works if the SourceSpan of the diagnostic has more then one SynatxNode associated with it
@@ -165,61 +164,61 @@ public class Foo
             await VerifyCSharpFixAsync(oldSource, newSource);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestLiteralInMethodVerbatim()
         {
             await TestEmptyStringLiteral(true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestLiteralInMethod()
         {
             await TestEmptyStringLiteral(false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestLocalStringLiteralVerbatim()
         {
-            await TestLocalStringLiteral(true, false);
+            await TestLocalStringLiteralInternal(true, false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestLocalStringLiteral()
         {
-            await TestLocalStringLiteral(false, false);
+            await TestLocalStringLiteralInternal(false, false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstStringLiteralVerbatim()
         {
-            await TestLocalStringLiteral(true, true);
+            await TestLocalStringLiteralInternal(true, true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstStringLiteral()
         {
-            await TestLocalStringLiteral(false, true);
+            await TestLocalStringLiteralInternal(false, true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestAttributeStringLiteralVerbatim()
         {
-            await TestAttributeStringLiteral(true);
+            await TestAttributeStringLiteralInternal(true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestAttributeStringLiteral()
         {
-            await TestAttributeStringLiteral(false);
+            await TestAttributeStringLiteralInternal(false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestLiteralInMethodVerbatimCodeFix()
         {
             await TestSimpleCodeFix(true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestLiteralInMethodCodeFix()
         {
             await TestSimpleCodeFix(false);

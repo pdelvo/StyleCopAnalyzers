@@ -42,10 +42,17 @@ If (-not (Test-Path $nuget)) {
 $msbuild = "${env:ProgramFiles(x86)}\MSBuild\$VisualStudioVersion\Bin\MSBuild.exe"
 
 &$nuget 'restore' $SolutionPath
-&$msbuild '/nologo' '/m' '/nr:false' '/t:rebuild' "/p:Configuration=$BuildConfig" "/p:VisualStudioVersion=$VisualStudioVersion" "/p:KeyConfiguration=$KeyConfiguration" $SolutionPath
+&$msbuild '/nologo' '/m' '/Verbosity:minimal' '/nr:false' '/t:rebuild' "/p:Configuration=$BuildConfig" "/p:VisualStudioVersion=$VisualStudioVersion" "/p:KeyConfiguration=$KeyConfiguration" $SolutionPath
 if ($LASTEXITCODE -ne 0) {
 	$host.ui.WriteErrorLine('Build failed, aborting!')
-	exit $p.ExitCode
+	exit $LASTEXITCODE
+}
+# Run unit tests
+$xunit = "..\packages\xunit.runners.2.0.0-rc1-build2826\tools\xunit.console.exe"
+&$xunit "..\StyleCop.Analyzers\StyleCop.Analyzers.Test\bin\$BuildConfig\StyleCop.Analyzers.Test.dll" -parallel none
+if ($LASTEXITCODE -ne 0) {
+	$host.ui.WriteErrorLine('Test failed, aborting!')
+	exit $LASTEXITCODE
 }
 
 # By default, do not create a NuGet package unless the expected strong name key files were used

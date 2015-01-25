@@ -5,19 +5,18 @@
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CodeFixes;
     using Microsoft.CodeAnalysis.Diagnostics;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
     using StyleCop.Analyzers.DocumentationRules;
     using TestHelper;
 
     /// <summary>
     /// This class contains unit tests for <see cref="SA1607PartialElementDocumentationMustHaveSummaryText"/>-
     /// </summary>
-    [TestClass]
     public class SA1607UnitTests : CodeFixVerifier
     {
         public string DiagnosticId { get; } = SA1607PartialElementDocumentationMustHaveSummaryText.DiagnosticId;
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptySource()
         {
             var testCode = string.Empty;
@@ -129,116 +128,116 @@ TypeName
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, typeName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestClassWithDocumentation()
         {
             await TestTypeWithSummaryDocumentation("class");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStructWithDocumentation()
         {
             await TestTypeWithSummaryDocumentation("struct");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInterfaceWithDocumentation()
         {
             await TestTypeWithSummaryDocumentation("interface");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestClassWithContentDocumentation()
         {
             await TestTypeWithContentDocumentation("class");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStructWithContentDocumentation()
         {
             await TestTypeWithContentDocumentation("struct");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInterfaceWithContentDocumentation()
         {
             await TestTypeWithContentDocumentation("interface");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestClassWithInheritedDocumentation()
         {
             await TestTypeWithInheritedDocumentation("class");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStructWithInheritedDocumentation()
         {
             await TestTypeWithInheritedDocumentation("struct");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInterfaceWithInheritedDocumentation()
         {
             await TestTypeWithInheritedDocumentation("interface");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestClassWithoutSummaryDocumentation()
         {
             await TestTypeWithoutSummaryDocumentation("class");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestClassWithoutContentDocumentation()
         {
             await TestTypeWithoutContentDocumentation("class");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStructWithoutSummaryDocumentation()
         {
             await TestTypeWithoutSummaryDocumentation("struct");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStructWithoutContentDocumentation()
         {
             await TestTypeWithoutContentDocumentation("struct");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInterfaceWithoutSummaryDocumentation()
         {
             await TestTypeWithoutSummaryDocumentation("interface");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInterfaceWithoutContentDocumentation()
         {
             await TestTypeWithoutContentDocumentation("interface");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestClassNoDocumentation()
         {
             await TestTypeNoDocumentation("class");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStructNoDocumentation()
         {
             await TestTypeNoDocumentation("struct");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInterfaceNoDocumentation()
         {
             await TestTypeNoDocumentation("interface");
         }
 
-        [TestMethod]
-        public async Task TestMethodNoDocumentation()
+        [Fact]
+        public async Task FactNoDocumentation()
         {
             var testCode = @"
 /// <summary>
@@ -251,8 +250,8 @@ public class ClassName
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
-        public async Task TestMethodWithSummaryDocumentation()
+        [Fact]
+        public async Task FactWithSummaryDocumentation()
         {
             var testCode = @"
 /// <summary>
@@ -268,8 +267,8 @@ public class ClassName
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
-        public async Task TestMethodWithContentDocumentation()
+        [Fact]
+        public async Task FactWithContentDocumentation()
         {
             var testCode = @"
 /// <summary>
@@ -285,8 +284,8 @@ public class ClassName
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
-        public async Task TestMethodWithInheritedDocumentation()
+        [Fact]
+        public async Task FactWithInheritedDocumentation()
         {
             var testCode = @"
 /// <summary>
@@ -300,8 +299,8 @@ public class ClassName
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
-        public async Task TestMethodWithoutSummaryDocumentation()
+        [Fact]
+        public async Task FactWithoutSummaryDocumentation()
         {
             var testCode = @"
 /// <summary>
@@ -335,8 +334,8 @@ public class ClassName
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
         }
 
-        [TestMethod]
-        public async Task TestMethodWithoutContentDocumentation()
+        [Fact]
+        public async Task FactWithoutContentDocumentation()
         {
             var testCode = @"
 /// <summary>

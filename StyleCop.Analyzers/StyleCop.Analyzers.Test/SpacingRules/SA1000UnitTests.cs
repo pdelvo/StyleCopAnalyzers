@@ -5,7 +5,7 @@
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CodeFixes;
     using Microsoft.CodeAnalysis.Diagnostics;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
     using StyleCop.Analyzers.SpacingRules;
     using TestHelper;
 
@@ -13,19 +13,18 @@
     /// This class contains unit tests for <see cref="SA1000KeywordsMustBeSpacedCorrectly"/> and
     /// <see cref="SA1000CodeFixProvider"/>.
     /// </summary>
-    [TestClass]
     public class SA1000UnitTests : CodeFixVerifier
     {
         public string DiagnosticId { get; } = SA1000KeywordsMustBeSpacedCorrectly.DiagnosticId;
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptySource()
         {
             var testCode = string.Empty;
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestCatchallStatement()
         {
             string statement = @"try
@@ -39,7 +38,7 @@ catch
             await TestKeywordStatement(statement, EmptyDiagnosticResults, statement);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestCatchStatement()
         {
             string statementWithoutSpace = @"try
@@ -81,7 +80,7 @@ catch (Exception ex)
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestFixedStatement()
         {
             string statementWithoutSpace = @"fixed(byte* b = &y)
@@ -117,7 +116,7 @@ catch (Exception ex)
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestForStatement()
         {
             string statementWithoutSpace = @"for(int x = 0; x < 10; x++)
@@ -153,7 +152,7 @@ catch (Exception ex)
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestForeachStatement()
         {
             string statementWithoutSpace = @"foreach(int x in new int[0])
@@ -189,7 +188,7 @@ catch (Exception ex)
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestFromStatement()
         {
             string statementWithoutSpace = @"var result = from@x in y select x;";
@@ -219,7 +218,7 @@ catch (Exception ex)
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestGroupStatement()
         {
             string statementWithoutSpace = @"var result = from x in y
@@ -253,7 +252,7 @@ select z;";
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestIfStatement()
         {
             string statementWithoutSpace = @"if(true)
@@ -289,7 +288,7 @@ select z;";
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInStatement()
         {
             string statementWithoutSpace = @"var result = from x in@y select x;";
@@ -319,7 +318,7 @@ select z;";
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestIntoStatement()
         {
             string statementWithoutSpace = @"var result = from x in y
@@ -353,7 +352,7 @@ select z;";
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestJoinStatement()
         {
             string statementWithoutSpace = @"var result = from x in y
@@ -387,7 +386,7 @@ select z;";
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestLetStatement()
         {
             string statementWithoutSpace = @"var result = from x in y
@@ -421,7 +420,7 @@ select x;";
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestLockStatement()
         {
             string statementWithoutSpace = @"lock(new object())
@@ -457,7 +456,7 @@ select x;";
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestOrderbyStatement()
         {
             string statementWithoutSpace = @"var result = from x in y
@@ -491,7 +490,7 @@ select z;";
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestReturnVoidStatement()
         {
             string statementWithoutSpace = @"return;";
@@ -521,7 +520,7 @@ select z;";
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestReturnIntStatement()
         {
             string statementWithoutSpace = @"return(3);";
@@ -551,7 +550,7 @@ select z;";
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestSelectStatement()
         {
             string statementWithoutSpace = @"var result = from x in y select@x;";
@@ -581,7 +580,7 @@ select z;";
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStackallocStatement()
         {
             string statementWithoutSpace = @"int* x = stackalloc@Int32[3];";
@@ -611,7 +610,7 @@ select z;";
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestSwitchStatement()
         {
             string statementWithoutSpace = @"switch(3)
@@ -651,7 +650,7 @@ default:
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestThrowStatement()
         {
             string statementWithoutSpace = @"throw(new Exception());";
@@ -681,7 +680,7 @@ default:
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestRethrowStatement()
         {
             string statementWithoutSpace = @"try
@@ -725,7 +724,7 @@ catch (Exception ex)
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestUsingStatement()
         {
             string statementWithoutSpace = @"using(default(IDisposable))
@@ -761,7 +760,7 @@ catch (Exception ex)
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestWhereStatement()
         {
             string statementWithoutSpace = @"var result = from x in y
@@ -795,7 +794,7 @@ select z;";
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestWhileStatement()
         {
             string statementWithoutSpace = @"while(false)
@@ -830,16 +829,8 @@ select z;";
 
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
-
-        [TestMethod]
-        [Ignore]
-        public void TestYieldStatement()
-        {
-            // There is no way to have a 'yield' keyword which is not followed by a space.
-            Assert.Inconclusive("Not yet implemented.");
-        }
-
-        [TestMethod]
+        
+        [Fact]
         public async Task TestCheckedStatement()
         {
             string statementWithoutSpace = @"int x = checked(3);";
@@ -869,7 +860,7 @@ select z;";
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestDefaultCaseStatement()
         {
             string statementWithoutSpace = @"switch (3)
@@ -909,7 +900,7 @@ default :
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestDefaultValueStatement()
         {
             string statementWithoutSpace = @"int x = default(int);";
@@ -939,7 +930,7 @@ default :
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNameofStatement()
         {
             string statementWithoutSpace = @"string x = nameof(x);";
@@ -969,7 +960,7 @@ default :
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestSizeofStatement()
         {
             string statementWithoutSpace = @"int x = sizeof(int);";
@@ -999,7 +990,7 @@ default :
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestTypeofStatement()
         {
             string statementWithoutSpace = @"Type x = typeof(int);";
@@ -1029,7 +1020,7 @@ default :
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestUncheckedStatement()
         {
             string statementWithoutSpace = @"int x = unchecked(3);";
@@ -1059,7 +1050,7 @@ default :
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNewObjectStatement()
         {
             string statementWithoutSpace = @"int x = new@Int32();";
@@ -1089,7 +1080,7 @@ default :
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNewArrayStatement()
         {
             string statementWithoutSpace = @"int[] x = new@Int32[3];";
@@ -1119,7 +1110,7 @@ default :
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNewImplicitArrayStatement()
         {
             string statementWithoutSpace = @"int[] x = new[] { 3 };";
@@ -1132,7 +1123,7 @@ default :
             await TestKeywordStatement(statementWithSpace, EmptyDiagnosticResults, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNewConstructorContraintStatement_Type()
         {
             string statementWithSpace = @"public class Foo<T> where T : new ()
@@ -1166,7 +1157,7 @@ default :
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNewConstructorContraintStatement_TypeWithMultipleConstraints()
         {
             string statementWithSpace = @"public class Foo<T> where T : X, new ()
@@ -1200,7 +1191,7 @@ default :
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNewConstructorContraintStatement_TypeWithClassConstraints()
         {
             string statementWithSpace = @"public class Foo<T> where T : class, new ()
@@ -1234,7 +1225,7 @@ default :
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNewConstructorContraintStatement_Method()
         {
             string statementWithSpace = @"public void Foo<T>() where T : new ()
@@ -1268,7 +1259,7 @@ default :
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNewConstructorContraintStatement_MethodWithMultipleConstraints()
         {
             string statementWithSpace = @"public void Foo<T>() where T : X, new ()
@@ -1302,7 +1293,7 @@ default :
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNewConstructorContraintStatement_MethodWithClassConstraints()
         {
             string statementWithSpace = @"public void Foo<T>() where T : class, new ()
@@ -1336,7 +1327,7 @@ default :
             await TestKeywordStatement(statementWithSpace, expected, statementWithoutSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestAwaitIdentifier()
         {
             string statementWithoutSpace = @"var result = await(x);";
@@ -1347,7 +1338,7 @@ default :
             await TestKeywordStatement(statementWithSpace, EmptyDiagnosticResults, statementWithSpace, asyncMethod: false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestAwaitStatement()
         {
             string statementWithoutSpace = @"var result = await(x);";
@@ -1377,7 +1368,7 @@ default :
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace, asyncMethod: true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestCaseStatement()
         {
             string statementWithoutSpace = @"switch (3)
@@ -1419,7 +1410,7 @@ default:
             await TestKeywordStatement(statementWithoutSpace, expected, statementWithSpace);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestGotoCaseStatement()
         {
             string statementWithoutSpace = @"switch (3)

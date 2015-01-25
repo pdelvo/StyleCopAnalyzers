@@ -5,7 +5,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.CodeAnalysis;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
     using TestHelper;
 
     public abstract class DebugMessagesUnitTestsBase : CodeFixVerifier
@@ -25,134 +25,134 @@
             get;
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptySource()
         {
             var testCode = string.Empty;
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Field_Pass()
         {
             await TestConstantMessage_Field_Pass("\" foo \"");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Field_PassExpression()
         {
             await TestConstantMessage_Field_Pass("\" \" + \"foo\" + \" \"");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Field_PassWrongType()
         {
             await TestConstantMessage_Field_Pass("3");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Local_Pass()
         {
             await TestConstantMessage_Local_Pass("\" foo \"");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Local_PassExpression()
         {
             await TestConstantMessage_Local_Pass("\" \" + \"foo\" + \" \"");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Local_PassWrongType()
         {
             await TestConstantMessage_Local_Pass("3");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Inline_Pass()
         {
             await TestConstantMessage_Inline_Pass("\" foo \"");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Inline_PassExpression()
         {
             await TestConstantMessage_Inline_Pass("\" \" + \"foo\" + \" \"");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Inline_PassWrongType()
         {
             await TestConstantMessage_Inline_Pass("3");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Field_FailNull()
         {
             await TestConstantMessage_Field_Fail("null");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Field_FailEmpty()
         {
             await TestConstantMessage_Field_Fail("\"\"");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Field_FailWhitespace()
         {
             await TestConstantMessage_Field_Fail("\"  \"");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Field_FailExpressionWhitespace()
         {
             await TestConstantMessage_Field_Fail("\"  \" + \"  \"");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Local_FailNull()
         {
             await TestConstantMessage_Local_Fail("null");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Local_FailEmpty()
         {
             await TestConstantMessage_Local_Fail("\"\"");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Local_FailWhitespace()
         {
             await TestConstantMessage_Local_Fail("\"  \"");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Local_FailExpressionWhitespace()
         {
             await TestConstantMessage_Local_Fail("\"  \" + \"  \"");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Inline_FailNull()
         {
             await TestConstantMessage_Inline_Fail("null");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Inline_FailEmpty()
         {
             await TestConstantMessage_Inline_Fail("\"\"");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Inline_FailWhitespace()
         {
             await TestConstantMessage_Inline_Fail("\"  \"");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstantMessage_Inline_FailExpressionWhitespace()
         {
             await TestConstantMessage_Inline_Fail("\"  \" + \"  \"");
@@ -291,7 +291,7 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(BuildTestCode(testCodeFormat), argument), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNotConstantMessage()
         {
             var testCode = @"using System.Diagnostics;
@@ -306,7 +306,7 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(BuildTestCode(testCode), EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestWrongDebugClass()
         {
             var testCode = @"
@@ -330,7 +330,7 @@ class Debug
             await VerifyCSharpDiagnosticAsync(BuildTestCode(testCode), EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestWrongMethod()
         {
             var testCode = @"using System.Diagnostics;

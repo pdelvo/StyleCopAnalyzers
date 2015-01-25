@@ -5,7 +5,7 @@
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CodeFixes;
     using Microsoft.CodeAnalysis.Diagnostics;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
     using StyleCop.Analyzers.DocumentationRules;
     using TestHelper;
     using static StyleCop.Analyzers.DocumentationRules.SA1642ConstructorSummaryDocumentationMustBeginWithStandardText;
@@ -13,19 +13,18 @@
     /// <summary>
     /// This class contains unit tests for <see cref="SA1642ConstructorSummaryDocumentationMustBeginWithStandardText"/>-
     /// </summary>
-    [TestClass]
     public class SA1642UnitTests : CodeFixVerifier
     {
         public string DiagnosticId { get; } = SA1642ConstructorSummaryDocumentationMustBeginWithStandardText.DiagnosticId;
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptySource()
         {
             var testCode = string.Empty;
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNoDocumentation()
         {
             var testCode = @"namespace FooNamespace
@@ -61,19 +60,19 @@
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptyPublicConstructor()
         {
             await TestEmptyConstructor("public");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptyNonPublicConstructor()
         {
             await TestEmptyConstructor("private");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptyStaticConstructor()
         {
             await TestEmptyConstructor("static");
@@ -119,73 +118,73 @@
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, generic ? "<T1, T2>" : string.Empty, generic ? "{T1, T2}" : string.Empty, part1, part2, modifiers), EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNonPrivateConstructorCorrectDocumentationSimple()
         {
             await TestConstructorCorrectDocumentationSimple("public", NonPrivateConstructorStandardText[0], NonPrivateConstructorStandardText[1], false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNonPrivateConstructorCorrectDocumentationCustomized()
         {
             await TestConstructorCorrectDocumentationCustomized("public", NonPrivateConstructorStandardText[0], NonPrivateConstructorStandardText[1], false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNonPrivateConstructorCorrectDocumentationGenericSimple()
         {
             await TestConstructorCorrectDocumentationSimple("public", NonPrivateConstructorStandardText[0], NonPrivateConstructorStandardText[1], true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNonPrivateConstructorCorrectDocumentationGenericCustomized()
         {
             await TestConstructorCorrectDocumentationCustomized("public", NonPrivateConstructorStandardText[0], NonPrivateConstructorStandardText[1], true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestPrivateConstructorCorrectDocumentationSimple()
         {
             await TestConstructorCorrectDocumentationSimple("private", PrivateConstructorStandardText[0], PrivateConstructorStandardText[1], false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestPrivateConstructorCorrectDocumentationCustomized()
         {
             await TestConstructorCorrectDocumentationCustomized("private", PrivateConstructorStandardText[0], PrivateConstructorStandardText[1], false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestPrivateConstructorCorrectDocumentationGenericSimple()
         {
             await TestConstructorCorrectDocumentationSimple("private", PrivateConstructorStandardText[0], PrivateConstructorStandardText[1], true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestPrivateConstructorCorrectDocumentationGenericCustomized()
         {
             await TestConstructorCorrectDocumentationCustomized("private", PrivateConstructorStandardText[0], PrivateConstructorStandardText[1], true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStaticConstructorCorrectDocumentationSimple()
         {
             await TestConstructorCorrectDocumentationSimple("static", StaticConstructorStandardText[0], StaticConstructorStandardText[1], false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStaticConstructorCorrectDocumentationCustomized()
         {
             await TestConstructorCorrectDocumentationCustomized("static", StaticConstructorStandardText[0], StaticConstructorStandardText[1], false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStaticConstructorCorrectDocumentationGenericSimple()
         {
             await TestConstructorCorrectDocumentationSimple("static", StaticConstructorStandardText[0], StaticConstructorStandardText[1], true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStaticConstructorCorrectDocumentationGenericCustomized()
         {
             await TestConstructorCorrectDocumentationCustomized("static", StaticConstructorStandardText[0], StaticConstructorStandardText[1], true);
@@ -248,37 +247,37 @@
             await VerifyCSharpFixAsync(testCode, fixedCode);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNonPrivateConstructorMissingDocumentation()
         {
             await TestConstructorMissingDocumentation("public", NonPrivateConstructorStandardText[0], NonPrivateConstructorStandardText[1], false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNonPrivateConstructorMissingDocumentationGeneric()
         {
             await TestConstructorMissingDocumentation("public", NonPrivateConstructorStandardText[0], NonPrivateConstructorStandardText[1], true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestPrivateConstructorMissingDocumentation()
         {
             await TestConstructorMissingDocumentation("private", PrivateConstructorStandardText[0], PrivateConstructorStandardText[1], false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestPrivateConstructorMissingDocumentationGeneric()
         {
             await TestConstructorMissingDocumentation("private", PrivateConstructorStandardText[0], PrivateConstructorStandardText[1], true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStaticConstructorMissingDocumentation()
         {
             await TestConstructorMissingDocumentation("static", StaticConstructorStandardText[0], StaticConstructorStandardText[1], false);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStaticConstructorMissingDocumentationGeneric()
         {
             await TestConstructorMissingDocumentation("static", StaticConstructorStandardText[0], StaticConstructorStandardText[1], true);

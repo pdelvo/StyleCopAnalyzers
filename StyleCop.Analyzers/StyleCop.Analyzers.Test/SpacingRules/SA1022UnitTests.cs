@@ -2,10 +2,8 @@
 {
     using Microsoft.CodeAnalysis.CodeFixes;
     using Microsoft.CodeAnalysis.Diagnostics;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using StyleCop.Analyzers.SpacingRules;
-
-    [TestClass]
+    
     public class SA1022UnitTests : NumberSignSpacingTestBase
     {
         protected override string DiagnosticId

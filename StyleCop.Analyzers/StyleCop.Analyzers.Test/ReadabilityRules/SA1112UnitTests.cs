@@ -2,27 +2,26 @@
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using StyleCop.Analyzers.ReadabilityRules;
 using TestHelper;
 
 namespace StyleCop.Analyzers.Test.ReadabilityRules
 {
-    [TestClass]
     public class SA1112UnitTests : CodeFixVerifier
     {
 
         public string DiagnosticId { get; } = SA1112ClosingParenthesisMustBeOnLineOfOpeningParenthesis.DiagnosticId;
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptySource()
         {
             var testCode = string.Empty;
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
-        public async Task TestMethodWithNoParametersClosingParanthesisOnTheNextLine()
+        [Fact]
+        public async Task FactWithNoParametersClosingParanthesisOnTheNextLine()
         {
             var testCode = @"
 class Foo
@@ -52,8 +51,8 @@ class Foo
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
         }
 
-        [TestMethod]
-        public async Task TestMethodWithNoParametersClosingParanthesisOnTheSameLine()
+        [Fact]
+        public async Task FactWithNoParametersClosingParanthesisOnTheSameLine()
         {
             var testCode = @"
 class Foo
@@ -67,8 +66,8 @@ class Foo
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
-        public async Task TestMethodWithParametersClosingParanthesisOnTheNextLine()
+        [Fact]
+        public async Task FactWithParametersClosingParanthesisOnTheNextLine()
         {
             var testCode = @"
 class Foo
@@ -84,7 +83,7 @@ string s)
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstructorWithNoParametersClosingParanthesisOnTheNextLine()
         {
             var testCode = @"
@@ -115,7 +114,7 @@ class Foo
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstructorWithNoParametersClosingParanthesisOnTheSameLine()
         {
             var testCode = @"
@@ -130,7 +129,7 @@ class Foo
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstructorWithParametersClosingParanthesisOnTheNextLine()
         {
             var testCode = @"
@@ -147,8 +146,8 @@ string s)
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
-        public async Task TestMethodCallNoParametersClosingParanthesisOnTheNextLine()
+        [Fact]
+        public async Task FactCallNoParametersClosingParanthesisOnTheNextLine()
         {
             var testCode = @"
 class Foo
@@ -179,8 +178,8 @@ class Foo
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
         }
 
-        [TestMethod]
-        public async Task TestMethodCallWithParametersClosingParanthesisOnTheNextLine()
+        [Fact]
+        public async Task FactCallWithParametersClosingParanthesisOnTheNextLine()
         {
             var testCode = @"
 class Foo
@@ -195,8 +194,8 @@ class Foo
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
-        public async Task TestMethodCallNoParametersClosingParanthesisOnTheSameLine()
+        [Fact]
+        public async Task FactCallNoParametersClosingParanthesisOnTheSameLine()
         {
             var testCode = @"
 class Foo
@@ -210,7 +209,7 @@ class Foo
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstructorCallNoParametersClosingParanthesisOnTheNextLine()
         {
             var testCode = @"
@@ -241,7 +240,7 @@ class Foo
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstructorCallWithParametersClosingParanthesisOnTheNextLine()
         {
             var testCode = @"
@@ -263,7 +262,7 @@ class Foo
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestConstructorCallNoParametersClosingParanthesisOnTheSameLine()
         {
             var testCode = @"
@@ -279,7 +278,7 @@ class Foo
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestIndexerWithParametersClosingParanthesisOnTheNextLine()
         {
             var testCode = @"
@@ -298,7 +297,7 @@ class Foo
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestCreationOfObjectNoOpeningClosingParenthesis()
         {
             var testCode = @"

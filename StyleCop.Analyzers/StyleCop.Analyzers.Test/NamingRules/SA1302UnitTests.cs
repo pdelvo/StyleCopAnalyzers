@@ -2,26 +2,25 @@
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using StyleCop.Analyzers.MaintainabilityRules;
 using StyleCop.Analyzers.NamingRules;
 using TestHelper;
 
 namespace StyleCop.Analyzers.Test.NamingRules
 {
-    [TestClass]
     public class SA1302UnitTests : CodeFixVerifier
     {
         private const string DiagnosticId = SA1302InterfaceNamesMustBeginWithI.DiagnosticId;
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptySource()
         {
             var testCode = string.Empty;
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInterfaceDeclarationDoesNotStartWithI()
         {
             var testCode = @"
@@ -47,7 +46,7 @@ public interface Foo
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInterfaceDeclarationStartsWithLowerI()
         {
             var testCode = @"
@@ -73,7 +72,7 @@ public interface iFoo
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInnerInterfaceDeclarationDoesNotStartWithI()
         {
             var testCode = @"
@@ -102,7 +101,7 @@ public class Bar
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInterfaceDeclarationDoesStartWithI()
         {
             var testCode = @"public interface IFoo
@@ -112,7 +111,7 @@ public class Bar
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInnerInterfaceDeclarationDoesStartWithI()
         {
             var testCode = @"
@@ -126,7 +125,7 @@ public class Bar
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestComInterfaceInNativeMethodsClass()
         {
             var testCode = @"
@@ -141,7 +140,7 @@ public class NativeMethods
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestComInterfaceInNativeMethodsClassWithIncorrectName()
         {
             var testCode = @"
@@ -171,7 +170,7 @@ public class NativeMethodsClass
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestComInterfaceInInnerClassInNativeMethodsClass()
         {
             var testCode = @"

@@ -6,7 +6,7 @@
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CodeFixes;
     using Microsoft.CodeAnalysis.Diagnostics;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
     using StyleCop.Analyzers.ReadabilityRules;
     using TestHelper;
     using System;
@@ -15,7 +15,6 @@
     /// <summary>
     /// This class contains unit tests for <see cref="SA1121UseBuiltInTypeAlias"/>
     /// </summary>
-    [TestClass]
     public class SA1121UnitTests : CodeFixVerifier
     {
         static readonly Tuple<string, string>[] _referenceTypes = new Tuple<string, string>[]
@@ -67,7 +66,7 @@
                 }
                 catch (Exception ex)
                 {
-                    throw new AssertFailedException("Type failed: " + item.Item1 + Environment.NewLine + ex.Message, ex);
+                    Assert.True(false, "Type failed: " + item.Item1 + Environment.NewLine + ex.Message);
                 }
             }
         }
@@ -123,14 +122,14 @@
         }
 
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptySource()
         {
             var testCode = string.Empty;
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        private async Task TestVariableDeclaration(string predefined, string fullName)
+        private async Task TestVariableDeclarationInternal(string predefined, string fullName)
         {
             string testCode = @"using System;
 public class Foo
@@ -162,7 +161,7 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestVariableDeclarationCodeFix()
         {
             string testSource = @"using System;
@@ -177,13 +176,13 @@ public class Foo
             await VerifyAllFixes(testSource);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestVariableDeclaration()
         {
-            await TestAllCases(TestVariableDeclaration);
+            await TestAllCases(TestVariableDeclarationInternal);
         }
 
-        private async Task TestDefaultDeclaration(string predefined, string fullName)
+        private async Task TestDefaultDeclarationInternal(string predefined, string fullName)
         {
             string testCode = @"using System;
 public class Foo
@@ -214,13 +213,13 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestDefaultDeclaration()
         {
-            await TestAllCases(TestDefaultDeclaration);
+            await TestAllCases(TestDefaultDeclarationInternal);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestDefaultDeclarationCodeFix()
         {
             string testSource = @"using System;
@@ -235,7 +234,7 @@ public class Foo
             await VerifyAllFixes(testSource);
         }
 
-        private async Task TestTypeOf(string predefined, string fullName)
+        private async Task TestTypeOfInternal(string predefined, string fullName)
         {
             string testCode = @"using System;
 public class Foo
@@ -266,13 +265,13 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestTypeOf()
         {
-            await TestAllCases(TestTypeOf);
+            await TestAllCases(TestTypeOfInternal);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestTypeOfCodeFix()
         {
             string testSource = @"using System;
@@ -287,7 +286,7 @@ public class Foo
             await VerifyAllFixes(testSource);
         }
 
-        private async Task TestReturnType(string predefined, string fullName)
+        private async Task TestReturnTypeInternal(string predefined, string fullName)
         {
             string testCode = @"using System;
 public class Foo
@@ -317,13 +316,13 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestReturnType()
         {
-            await TestAllCases(TestReturnType);
+            await TestAllCases(TestReturnTypeInternal);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestReturnTypeCodeFix()
         {
             string testSource = @"using System;
@@ -337,7 +336,7 @@ public class Foo
             await VerifyAllFixes(testSource);
         }
 
-        private async Task TestEnumBaseType(string predefined, string fullName)
+        private async Task TestEnumBaseTypeInternal(string predefined, string fullName)
         {
             string testCode = @"using System;
 public class Foo
@@ -367,13 +366,13 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestEnumBaseType()
         {
-            await TestEnumTypeCases(TestEnumBaseType);
+            await TestEnumTypeCases(TestEnumBaseTypeInternal);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestEnumBaseTypeCodeFix()
         {
             string testSource = @"using System;
@@ -387,7 +386,7 @@ public class Foo
             await VerifyEnumTypeFixes(testSource);
         }
 
-        private async Task TestPointerDeclaration(string predefined, string fullName)
+        private async Task TestPointerDeclarationInternal(string predefined, string fullName)
         {
             string testCode = @"using System;
 public class Foo
@@ -418,13 +417,13 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestPointerDeclaration()
         {
-            await TestValueTypeCases(TestPointerDeclaration);
+            await TestValueTypeCases(TestPointerDeclarationInternal);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestPointerDeclarationCodeFix()
         {
             string testSource = @"using System;
@@ -439,7 +438,7 @@ public class Foo
             await VerifyValueTypeFixes(testSource);
         }
 
-        private async Task TestArgument(string predefined, string fullName)
+        private async Task TestArgumentInternal(string predefined, string fullName)
         {
             string testCode = @"using System;
 public class Foo
@@ -469,13 +468,13 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestArgument()
         {
-            await TestAllCases(TestArgument);
+            await TestAllCases(TestArgumentInternal);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestArgumentCodeFix()
         {
             string testSource = @"using System;
@@ -489,7 +488,7 @@ public class Foo
             await VerifyAllFixes(testSource);
         }
 
-        private async Task TestIndexer(string predefined, string fullName)
+        private async Task TestIndexerInternal(string predefined, string fullName)
         {
             string testCode = @"using System;
 public class Foo
@@ -543,13 +542,13 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestIndexer()
         {
-            await TestAllCases(TestIndexer);
+            await TestAllCases(TestIndexerInternal);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestIndexerCodeFix()
         {
             string testSource = @"using System;
@@ -565,7 +564,7 @@ public class Foo
             await VerifyAllFixes(testSource);
         }
 
-        private async Task TestGenericAndLambda(string predefined, string fullName)
+        private async Task TestGenericAndLambdaInternal(string predefined, string fullName)
         {
             string testCode = @"using System;
 public class Foo
@@ -620,13 +619,13 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestGenericAndLambda()
         {
-            await TestAllCases(TestGenericAndLambda);
+            await TestAllCases(TestGenericAndLambdaInternal);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestGenericAndLambdaCodeFix()
         {
             string testSource = @"using System;
@@ -643,7 +642,7 @@ public class Foo
             await VerifyAllFixes(testSource);
         }
 
-        private async Task TestArray(string predefined, string fullName)
+        private async Task TestArrayInternal(string predefined, string fullName)
         {
             string testCode = @"using System;
 public class Foo
@@ -674,13 +673,13 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestArray()
         {
-            await TestAllCases(TestArray);
+            await TestAllCases(TestArrayInternal);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestArrayCodeFix()
         {
             string testSource = @"using System;
@@ -695,7 +694,7 @@ public class Foo
             await VerifyAllFixes(testSource);
         }
 
-        private async Task TestStackAllocArray(string predefined, string fullName)
+        private async Task TestStackAllocArrayInternal(string predefined, string fullName)
         {
             string testCode = @"using System;
 public class Foo
@@ -726,13 +725,13 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStackAllocArray()
         {
-            await TestAllCases(TestStackAllocArray);
+            await TestAllCases(TestStackAllocArrayInternal);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestStackAllocArrayCodeFix()
         {
             string testSource = @"using System;
@@ -747,7 +746,7 @@ public class Foo
             await VerifyValueTypeFixes(testSource);
         }
 
-        private async Task TestImplicitCast(string predefined, string fullName)
+        private async Task TestImplicitCastInternal(string predefined, string fullName)
         {
             string testCode = @"using System;
 public class Foo
@@ -790,13 +789,13 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestImplicitCast()
         {
-            await TestAllCases(TestImplicitCast);
+            await TestAllCases(TestImplicitCastInternal);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestImplicitCastCodeFix()
         {
             string testSource = @"using System;
@@ -812,7 +811,7 @@ public class Foo
             await VerifyValueTypeFixes(testSource);
         }
 
-        private async Task TestExplicitCast(string predefined, string fullName)
+        private async Task TestExplicitCastInternal(string predefined, string fullName)
         {
             string testCode = @"using System;
 public class Foo
@@ -843,13 +842,13 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestExplicitCast()
         {
-            await TestReferenceTypeCases(TestExplicitCast);
+            await TestReferenceTypeCases(TestExplicitCastInternal);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestExplicitCastCodeFix()
         {
             string testSource = @"using System;
@@ -864,7 +863,7 @@ public class Foo
             await VerifyValueTypeFixes(testSource);
         }
 
-        private async Task TestNullable(string predefined, string fullName)
+        private async Task TestNullableInternal(string predefined, string fullName)
         {
             string testCode = @"using System;
 public class Foo
@@ -895,13 +894,13 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(string.Format(testCode, fullName), expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNullable()
         {
-            await TestValueTypeCases(TestNullable);
+            await TestValueTypeCases(TestNullableInternal);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNullableCodeFix()
         {
             string testSource = @"using System;
@@ -916,7 +915,7 @@ public class Foo
             await VerifyValueTypeFixes(testSource);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestMissleadingUsing()
         {
             string testCode = @"namespace Foo
@@ -949,7 +948,7 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestMissleadingUsingCodeFix()
         {
             string oldSource = @"namespace Foo
@@ -974,7 +973,7 @@ public class Foo
             await VerifyCSharpFixAsync(oldSource, newSource, allowNewCompilerDiagnostics: true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestUsingNameChange()
         {
             string testCode = @"namespace Foo
@@ -1007,7 +1006,7 @@ public class Foo
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestUsingNameChangeCodeFix()
         {
             string oldSource = @"namespace Foo
@@ -1032,7 +1031,7 @@ public class Foo
             await VerifyCSharpFixAsync(oldSource, newSource, allowNewCompilerDiagnostics: true);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestWrongType()
         {
             string testCode = @"
@@ -1052,7 +1051,7 @@ public class {0} {{}}
             }
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestUsing()
         {
             string testCode = @"
@@ -1075,7 +1074,7 @@ public namespace {0}
             }
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNameOf()
         {
             string testCode = @"
@@ -1096,7 +1095,7 @@ namespace Foo
             }
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestNameOfInnerMethod()
         {
             string testCode = @"

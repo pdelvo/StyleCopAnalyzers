@@ -2,25 +2,24 @@
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using StyleCop.Analyzers.NamingRules;
 using TestHelper;
 
 namespace StyleCop.Analyzers.Test.NamingRules
 {
-    [TestClass]
     public class SA1304UnitTests : CodeFixVerifier
     {
         private const string DiagnosticId = SA1304NonPrivateReadonlyFieldsMustBeginWithUpperCaseLetter.DiagnosticId;
 
-        [TestMethod]
+        [Fact]
         public async Task TestEmptySource()
         {
             var testCode = string.Empty;
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestPublicReadonlyFieldStartingWithLowerCase()
         {
             var testCode = @"public class Foo
@@ -46,7 +45,7 @@ namespace StyleCop.Analyzers.Test.NamingRules
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestPublicReadonlyFieldStartingWithUpperCase()
         {
             var testCode = @"public class Foo
@@ -57,7 +56,7 @@ namespace StyleCop.Analyzers.Test.NamingRules
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestProtectedReadonlyFieldStartingWithLowerCase()
         {
             var testCode = @"public class Foo
@@ -83,7 +82,7 @@ namespace StyleCop.Analyzers.Test.NamingRules
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestProtectedReadonlyFieldStartingWithUpperCase()
         {
             var testCode = @"public class Foo
@@ -94,7 +93,7 @@ namespace StyleCop.Analyzers.Test.NamingRules
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInternalReadonlyFieldStartingWithLowerCase()
         {
             var testCode = @"public class Foo
@@ -120,7 +119,7 @@ namespace StyleCop.Analyzers.Test.NamingRules
             await VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestInternalReadonlyFieldStartingWithUpperCase()
         {
             var testCode = @"public class Foo
@@ -131,7 +130,7 @@ namespace StyleCop.Analyzers.Test.NamingRules
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestlWithNoAccessibilityKeywordReadonlyFieldStartingWithLowerCase()
         {
             var testCode = @"public class Foo
@@ -142,7 +141,7 @@ namespace StyleCop.Analyzers.Test.NamingRules
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestlPublicFieldStartingWithLowerCase()
         {
             var testCode = @"public class Foo
@@ -153,7 +152,7 @@ namespace StyleCop.Analyzers.Test.NamingRules
             await VerifyCSharpDiagnosticAsync(testCode, EmptyDiagnosticResults, CancellationToken.None);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task TestPrivateReadonlyFieldStartingWithLowerCase()
         {
             var testCode = @"public class Foo
