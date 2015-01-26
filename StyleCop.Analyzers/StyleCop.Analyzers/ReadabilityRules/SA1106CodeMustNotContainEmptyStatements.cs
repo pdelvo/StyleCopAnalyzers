@@ -3,7 +3,7 @@
     using System.Collections.Immutable;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.Diagnostics;
-
+    // Bar
     /// <summary>
     /// The C# code contains an extra semicolon.
     /// </summary>
