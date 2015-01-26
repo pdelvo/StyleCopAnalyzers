@@ -1,5 +1,6 @@
 ﻿namespace StyleCop.Analyzers.Helpers
 {
+    // Foo
     using System;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;

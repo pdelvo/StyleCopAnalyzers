@@ -13,7 +13,8 @@
     /// </summary>
     internal static class XmlCommentHelper
     {
-        internal const string SummaryXmlTag = "summary";
+        // Add a spelling mistake
+        internal const string SummaryXmlTag = "sumary";
         internal const string ContentXmlTag = "content";
         internal const string InheritdocXmlTag = "inheritdoc";
         internal const string SeeXmlTag = "see";
