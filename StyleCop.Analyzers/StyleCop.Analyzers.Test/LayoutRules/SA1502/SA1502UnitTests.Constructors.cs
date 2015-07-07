@@ -169,7 +169,7 @@
         {
             var testCode = @"public ##PH## Foo
 {
-    public Foo(int parameter) 
+    public Foo(int parameter)
     { int bar; }
 }";
             var fixedTestCode = @"public ##PH## Foo

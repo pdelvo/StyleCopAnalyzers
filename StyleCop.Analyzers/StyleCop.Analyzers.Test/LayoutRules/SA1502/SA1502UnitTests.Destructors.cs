@@ -144,7 +144,7 @@
         {
             var testCode = @"public class Foo
 {
-    ~Foo() 
+    ~Foo()
     { int bar; }
 }";
             var fixedTestCode = @"public class Foo

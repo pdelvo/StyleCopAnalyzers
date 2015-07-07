@@ -187,7 +187,7 @@
         {
             var testCode = @"public ##PH## Foo
 {
-    public bool Bar() 
+    public bool Bar()
     { return false; }
 }";
             var fixedTestCode = @"public ##PH## Foo

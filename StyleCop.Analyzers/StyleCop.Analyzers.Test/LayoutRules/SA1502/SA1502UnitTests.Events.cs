@@ -152,7 +152,7 @@ public class Foo
 {
     private EventHandler x;
 
-    public event EventHandler Bar 
+    public event EventHandler Bar
     { add { x += value; } remove { x -= value; } }
 }";
             var fixedTestCode = @"using System;
