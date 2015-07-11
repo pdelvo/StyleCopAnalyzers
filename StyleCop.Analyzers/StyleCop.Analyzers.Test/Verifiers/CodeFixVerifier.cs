@@ -10,6 +10,7 @@
     using Microsoft.CodeAnalysis.CodeFixes;
     using Microsoft.CodeAnalysis.Diagnostics;
     using Microsoft.CodeAnalysis.Formatting;
+    using StyleCop.Analyzers.Test.Helpers;
     using Xunit;
 
     /// <summary>
@@ -68,34 +69,22 @@
             var document = CreateDocument(oldSource, language);
             var analyzerDiagnostics = await GetSortedDiagnosticsFromDocumentsAsync(analyzers, new[] { document }, cancellationToken).ConfigureAwait(false);
             var compilerDiagnostics = await GetCompilerDiagnosticsAsync(document, cancellationToken).ConfigureAwait(false);
-            var attempts = analyzerDiagnostics.Length;
 
-            for (int i = 0; i < attempts; ++i)
+            var singleDocumentTask = this.GetCodeFixDocumentAsync(document, analyzers, codeFixProvider, analyzerDiagnostics, codeFixIndex, cancellationToken).ConfigureAwait(false);
+            var fixAllDocumentTask = this.GetFixAllDocumentAsync(document, codeFixProvider, analyzerDiagnostics, cancellationToken).ConfigureAwait(false);
+
+            var singleDocument = await singleDocumentTask;
+            var fixAllDocument = await fixAllDocumentTask;
+
+            if (fixAllDocument != null)
             {
-                var actions = new List<CodeAction>();
-                var context = new CodeFixContext(document, analyzerDiagnostics[0], (a, d) => actions.Add(a), cancellationToken);
-                await codeFixProvider.RegisterCodeFixesAsync(context).ConfigureAwait(false);
+                var singleDocumentActualTextTask = GetStringFromDocumentAsync(singleDocument, cancellationToken).ConfigureAwait(false);
+                var fixAllDocumentActualTextTask = GetStringFromDocumentAsync(fixAllDocument, cancellationToken).ConfigureAwait(false);
 
-                if (!actions.Any())
-                {
-                    break;
-                }
-
-                if (codeFixIndex != null)
-                {
-                    document = await ApplyFixAsync(document, actions.ElementAt((int)codeFixIndex), cancellationToken).ConfigureAwait(false);
-                    break;
-                }
-
-                document = await ApplyFixAsync(document, actions.ElementAt(0), cancellationToken).ConfigureAwait(false);
-                analyzerDiagnostics = await GetSortedDiagnosticsFromDocumentsAsync(analyzers, new[] { document }, cancellationToken).ConfigureAwait(false);
-
-                // check if there are analyzer diagnostics left after the code fix
-                if (!analyzerDiagnostics.Any())
-                {
-                    break;
-                }
+                Assert.Equal(await singleDocumentActualTextTask, await fixAllDocumentActualTextTask);
             }
+
+            document = singleDocument;
 
             var newCompilerDiagnostics = GetNewDiagnostics(compilerDiagnostics, await GetCompilerDiagnosticsAsync(document, cancellationToken).ConfigureAwait(false));
 
@@ -116,6 +105,62 @@
             // after applying all of the code fixes, compare the resulting string to the inputted one
             var actual = await GetStringFromDocumentAsync(document, cancellationToken).ConfigureAwait(false);
             Assert.Equal(newSource, actual);
+        }
+
+        private async Task<Document> GetCodeFixDocumentAsync(Document document, ImmutableArray<DiagnosticAnalyzer> analyzers, CodeFixProvider codeFixProvider, ImmutableArray<Diagnostic> analyzerDiagnostics, int? codeFixIndex, CancellationToken cancellationToken)
+        {
+            var attempts = analyzerDiagnostics.Length;
+
+            var changedDocument = document;
+
+            for (int i = 0; i < attempts; ++i)
+            {
+                var actions = new List<CodeAction>();
+                var context = new CodeFixContext(changedDocument, analyzerDiagnostics[0], (a, d) => actions.Add(a), cancellationToken);
+                await codeFixProvider.RegisterCodeFixesAsync(context).ConfigureAwait(false);
+
+                if (!actions.Any())
+                {
+                    break;
+                }
+
+                if (codeFixIndex != null)
+                {
+                    changedDocument = await ApplyFixAsync(changedDocument, actions.ElementAt((int)codeFixIndex), cancellationToken).ConfigureAwait(false);
+                    break;
+                }
+
+                changedDocument = await ApplyFixAsync(changedDocument, actions.ElementAt(0), cancellationToken).ConfigureAwait(false);
+                analyzerDiagnostics = await GetSortedDiagnosticsFromDocumentsAsync(analyzers, new[] { changedDocument }, cancellationToken).ConfigureAwait(false);
+
+                // check if there are analyzer diagnostics left after the code fix
+                if (!analyzerDiagnostics.Any())
+                {
+                    break;
+                }
+            }
+
+            return changedDocument;
+        }
+
+        private async Task<Document> GetFixAllDocumentAsync(Document document, CodeFixProvider codeFixProvider, ImmutableArray<Diagnostic> analyzerDiagnostics, CancellationToken cancellationToken)
+        {
+            FixAllContext fixAllContext = new FixAllContext(document, codeFixProvider, FixAllScope.Document, null, codeFixProvider.FixableDiagnosticIds, TestDiagnosticProvider.Create(analyzerDiagnostics), cancellationToken);
+
+            FixAllProvider provider = codeFixProvider.GetFixAllProvider();
+            if (provider != null)
+            {
+                CodeAction codeAction = await provider.GetFixAsync(fixAllContext).ConfigureAwait(false);
+
+                if (codeAction == null)
+                {
+                    return document;
+                }
+
+                return await ApplyFixAsync(document, codeAction, cancellationToken).ConfigureAwait(false);
+            }
+
+            return null;
         }
     }
 }
