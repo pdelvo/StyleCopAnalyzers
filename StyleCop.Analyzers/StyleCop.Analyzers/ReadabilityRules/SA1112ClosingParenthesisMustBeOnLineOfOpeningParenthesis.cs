@@ -25,7 +25,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1112ClosingParenthesisMustBeOnLineOfOpeningParenthesis : DiagnosticAnalyzer
+    public class SA1112ClosingParenthesisMustBeOnLineOfOpeningParenthesis : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the
@@ -53,12 +53,12 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleMethodDeclaration, SyntaxKind.MethodDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleConstructorDeclaration, SyntaxKind.ConstructorDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleInvocationExpression, SyntaxKind.InvocationExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleObjectCreationExpression, SyntaxKind.ObjectCreationExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleMethodDeclaration, SyntaxKind.MethodDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleConstructorDeclaration, SyntaxKind.ConstructorDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleInvocationExpression, SyntaxKind.InvocationExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleObjectCreationExpression, SyntaxKind.ObjectCreationExpression);
         }
 
         private static void HandleObjectCreationExpression(SyntaxNodeAnalysisContext context)

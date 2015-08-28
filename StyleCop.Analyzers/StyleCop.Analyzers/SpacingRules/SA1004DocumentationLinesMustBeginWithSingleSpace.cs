@@ -38,7 +38,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1004DocumentationLinesMustBeginWithSingleSpace : DiagnosticAnalyzer
+    public class SA1004DocumentationLinesMustBeginWithSingleSpace : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1004DocumentationLinesMustBeginWithSingleSpace"/>
@@ -66,9 +66,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxTreeActionHonorExclusions(this.HandleSyntaxTree);
+            this.RegisterSyntaxTreeActionHonorExclusions(context, this.HandleSyntaxTree);
         }
 
         private void HandleSyntaxTree(SyntaxTreeAnalysisContext context)

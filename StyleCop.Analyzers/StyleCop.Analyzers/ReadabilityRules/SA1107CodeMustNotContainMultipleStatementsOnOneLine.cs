@@ -15,7 +15,7 @@
     /// statement must begin on a new line.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1107CodeMustNotContainMultipleStatementsOnOneLine : DiagnosticAnalyzer
+    public class SA1107CodeMustNotContainMultipleStatementsOnOneLine : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1107CodeMustNotContainMultipleStatementsOnOneLine"/>
@@ -43,9 +43,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleBlock, SyntaxKind.Block);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleBlock, SyntaxKind.Block);
         }
 
         private static void HandleBlock(SyntaxNodeAnalysisContext context)

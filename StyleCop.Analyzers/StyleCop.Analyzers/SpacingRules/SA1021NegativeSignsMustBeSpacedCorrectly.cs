@@ -19,7 +19,7 @@
     /// line.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1021NegativeSignsMustBeSpacedCorrectly : DiagnosticAnalyzer
+    public class SA1021NegativeSignsMustBeSpacedCorrectly : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1021NegativeSignsMustBeSpacedCorrectly"/> analyzer.
@@ -46,9 +46,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxTreeActionHonorExclusions(this.HandleSyntaxTree);
+            this.RegisterSyntaxTreeActionHonorExclusions(context, this.HandleSyntaxTree);
         }
 
         private void HandleSyntaxTree(SyntaxTreeAnalysisContext context)

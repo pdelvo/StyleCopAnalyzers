@@ -14,7 +14,7 @@
     /// maintainability of the code-base, each file should contain at most one namespace.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1403FileMayOnlyContainASingleNamespace : DiagnosticAnalyzer
+    public class SA1403FileMayOnlyContainASingleNamespace : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1403FileMayOnlyContainASingleNamespace"/> analyzer.
@@ -41,9 +41,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxTreeActionHonorExclusions(this.HandleSyntaxTree);
+            this.RegisterSyntaxTreeActionHonorExclusions(context, this.HandleSyntaxTree);
         }
 
         private void HandleSyntaxTree(SyntaxTreeAnalysisContext context)

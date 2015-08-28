@@ -24,7 +24,7 @@
     /// opening or closing parenthesis or square bracket, or a semicolon or comma.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1009ClosingParenthesisMustBeSpacedCorrectly : DiagnosticAnalyzer
+    public class SA1009ClosingParenthesisMustBeSpacedCorrectly : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1009ClosingParenthesisMustBeSpacedCorrectly"/> analyzer.
@@ -51,9 +51,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxTreeActionHonorExclusions(HandleSyntaxTree);
+            this.RegisterSyntaxTreeActionHonorExclusions(context, HandleSyntaxTree);
         }
 
         private static void HandleSyntaxTree(SyntaxTreeAnalysisContext context)

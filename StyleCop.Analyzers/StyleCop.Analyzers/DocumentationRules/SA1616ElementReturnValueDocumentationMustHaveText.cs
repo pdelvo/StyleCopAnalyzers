@@ -21,7 +21,7 @@
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     [NoCodeFix("Cannot generate documentation")]
-    public class SA1616ElementReturnValueDocumentationMustHaveText : DiagnosticAnalyzer
+    public class SA1616ElementReturnValueDocumentationMustHaveText : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1616ElementReturnValueDocumentationMustHaveText"/>
@@ -49,10 +49,10 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleXmlElement, SyntaxKind.XmlElement);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleXmlEmptyElement, SyntaxKind.XmlEmptyElement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleXmlElement, SyntaxKind.XmlElement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleXmlEmptyElement, SyntaxKind.XmlEmptyElement);
         }
 
         private void HandleXmlElement(SyntaxNodeAnalysisContext context)

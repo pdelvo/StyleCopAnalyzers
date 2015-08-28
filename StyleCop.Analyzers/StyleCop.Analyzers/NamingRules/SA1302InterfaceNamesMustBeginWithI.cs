@@ -22,7 +22,7 @@
     /// <c>NativeMethods</c> class.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1302InterfaceNamesMustBeginWithI : DiagnosticAnalyzer
+    public class SA1302InterfaceNamesMustBeginWithI : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1302InterfaceNamesMustBeginWithI"/> analyzer.
@@ -49,9 +49,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleInterfaceDeclarationSyntax, SyntaxKind.InterfaceDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleInterfaceDeclarationSyntax, SyntaxKind.InterfaceDeclaration);
         }
 
         private void HandleInterfaceDeclarationSyntax(SyntaxNodeAnalysisContext context)

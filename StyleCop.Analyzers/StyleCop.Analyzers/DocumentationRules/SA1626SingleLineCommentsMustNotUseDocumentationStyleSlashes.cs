@@ -41,7 +41,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1626SingleLineCommentsMustNotUseDocumentationStyleSlashes : DiagnosticAnalyzer
+    public class SA1626SingleLineCommentsMustNotUseDocumentationStyleSlashes : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the
@@ -69,9 +69,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleSingleLineDocumentationTrivia, SyntaxKind.SingleLineDocumentationCommentTrivia);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleSingleLineDocumentationTrivia, SyntaxKind.SingleLineDocumentationCommentTrivia);
         }
 
         private void HandleSingleLineDocumentationTrivia(SyntaxNodeAnalysisContext context)

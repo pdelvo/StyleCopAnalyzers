@@ -18,7 +18,7 @@
     /// for the reader to make assumptions about the code, improving the readability of the code.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1400AccessModifierMustBeDeclared : DiagnosticAnalyzer
+    public class SA1400AccessModifierMustBeDeclared : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1400AccessModifierMustBeDeclared"/> analyzer.
@@ -45,22 +45,22 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleBaseTypeDeclarationSyntax, SyntaxKind.ClassDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleBaseTypeDeclarationSyntax, SyntaxKind.InterfaceDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleBaseTypeDeclarationSyntax, SyntaxKind.EnumDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleBaseTypeDeclarationSyntax, SyntaxKind.StructDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleDelegateDeclarationSyntax, SyntaxKind.DelegateDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleEventDeclarationSyntax, SyntaxKind.EventDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleMethodDeclarationSyntax, SyntaxKind.MethodDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandlePropertyDeclarationSyntax, SyntaxKind.PropertyDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleBaseFieldDeclarationSyntax, SyntaxKind.EventFieldDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleBaseFieldDeclarationSyntax, SyntaxKind.FieldDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleOperatorDeclarationSyntax, SyntaxKind.OperatorDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleConversionOperatorDeclarationSyntax, SyntaxKind.ConversionOperatorDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleIndexerDeclarationSyntax, SyntaxKind.IndexerDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleConstructorDeclarationSyntax, SyntaxKind.ConstructorDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleBaseTypeDeclarationSyntax, SyntaxKind.ClassDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleBaseTypeDeclarationSyntax, SyntaxKind.InterfaceDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleBaseTypeDeclarationSyntax, SyntaxKind.EnumDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleBaseTypeDeclarationSyntax, SyntaxKind.StructDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleDelegateDeclarationSyntax, SyntaxKind.DelegateDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleEventDeclarationSyntax, SyntaxKind.EventDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleMethodDeclarationSyntax, SyntaxKind.MethodDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandlePropertyDeclarationSyntax, SyntaxKind.PropertyDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleBaseFieldDeclarationSyntax, SyntaxKind.EventFieldDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleBaseFieldDeclarationSyntax, SyntaxKind.FieldDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleOperatorDeclarationSyntax, SyntaxKind.OperatorDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleConversionOperatorDeclarationSyntax, SyntaxKind.ConversionOperatorDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleIndexerDeclarationSyntax, SyntaxKind.IndexerDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleConstructorDeclarationSyntax, SyntaxKind.ConstructorDeclaration);
         }
 
         private void HandleBaseTypeDeclarationSyntax(SyntaxNodeAnalysisContext context)

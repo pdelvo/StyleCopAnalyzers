@@ -23,7 +23,7 @@
     /// <seealso href="https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA1641.md">SA1641 File header company name text must match</seealso>
     /// <seealso href="https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA1649.md">SA1649 File header file name documentation must match type name</seealso>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class FileHeaderAnalyzers : DiagnosticAnalyzer
+    public class FileHeaderAnalyzers : StyleCopDiagnosticAnalyzer
     {
         private const string SA1633Identifier = "SA1633";
         private const string SA1634Identifier = "SA1634";
@@ -165,19 +165,14 @@
                 SA1641Descriptor);
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
-        {
-            context.RegisterCompilationStartAction(HandleCompilationStart);
-        }
-
-        private static void HandleCompilationStart(CompilationStartAnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
             var compilation = context.Compilation;
 
             // Disabling SA1633 will disable all other header related diagnostics.
             if (!compilation.IsAnalyzerSuppressed(SA1633Identifier))
             {
-                context.RegisterSyntaxTreeActionHonorExclusions(ctx => HandleSyntaxTreeAxtion(ctx, compilation));
+                this.RegisterSyntaxTreeActionHonorExclusions(context, ctx => HandleSyntaxTreeAxtion(ctx, compilation));
             }
         }
 

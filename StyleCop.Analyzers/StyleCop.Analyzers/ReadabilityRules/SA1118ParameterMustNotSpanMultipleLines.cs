@@ -51,7 +51,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1118ParameterMustNotSpanMultipleLines : DiagnosticAnalyzer
+    public class SA1118ParameterMustNotSpanMultipleLines : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1118ParameterMustNotSpanMultipleLines"/> analyzer.
@@ -85,10 +85,10 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleArgumentList, SyntaxKind.ArgumentList, SyntaxKind.BracketedArgumentList);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleAttributeArgumentList, SyntaxKind.AttributeArgumentList);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleArgumentList, SyntaxKind.ArgumentList, SyntaxKind.BracketedArgumentList);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleAttributeArgumentList, SyntaxKind.AttributeArgumentList);
         }
 
         private void HandleAttributeArgumentList(SyntaxNodeAnalysisContext context)

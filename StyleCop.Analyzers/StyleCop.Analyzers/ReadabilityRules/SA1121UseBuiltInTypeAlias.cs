@@ -115,7 +115,7 @@
     /// </list>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1121UseBuiltInTypeAlias : DiagnosticAnalyzer
+    public class SA1121UseBuiltInTypeAlias : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1121UseBuiltInTypeAlias"/> analyzer.
@@ -142,9 +142,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleIdentifierNameSyntax, SyntaxKind.IdentifierName);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleIdentifierNameSyntax, SyntaxKind.IdentifierName);
         }
 
         private void HandleIdentifierNameSyntax(SyntaxNodeAnalysisContext context)

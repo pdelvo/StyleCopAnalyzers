@@ -23,7 +23,7 @@
     /// <c>NativeMethods</c> class.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1310FieldNamesMustNotContainUnderscore : DiagnosticAnalyzer
+    public class SA1310FieldNamesMustNotContainUnderscore : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1310FieldNamesMustNotContainUnderscore"/> analyzer.
@@ -50,9 +50,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleFieldDeclarationSyntax, SyntaxKind.FieldDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleFieldDeclarationSyntax, SyntaxKind.FieldDeclaration);
         }
 
         private void HandleFieldDeclarationSyntax(SyntaxNodeAnalysisContext context)

@@ -24,7 +24,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1122UseStringEmptyForEmptyStrings : DiagnosticAnalyzer
+    public class SA1122UseStringEmptyForEmptyStrings : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1122UseStringEmptyForEmptyStrings"/> analyzer.
@@ -51,9 +51,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleStringLiteral, SyntaxKind.StringLiteralExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleStringLiteral, SyntaxKind.StringLiteralExpression);
         }
 
         private void HandleStringLiteral(SyntaxNodeAnalysisContext context)

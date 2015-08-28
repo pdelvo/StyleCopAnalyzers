@@ -25,7 +25,7 @@
     /// element's type parameters.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1620GenericTypeParameterDocumentationMustMatchTypeParameters : DiagnosticAnalyzer
+    public class SA1620GenericTypeParameterDocumentationMustMatchTypeParameters : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the
@@ -58,9 +58,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleDocumentationTrivia, SyntaxKind.SingleLineDocumentationCommentTrivia);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleDocumentationTrivia, SyntaxKind.SingleLineDocumentationCommentTrivia);
         }
 
         private static void HandleDocumentationTrivia(SyntaxNodeAnalysisContext context)

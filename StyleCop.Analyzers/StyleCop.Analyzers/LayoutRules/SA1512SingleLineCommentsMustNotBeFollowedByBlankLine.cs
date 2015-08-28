@@ -68,7 +68,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1512SingleLineCommentsMustNotBeFollowedByBlankLine : DiagnosticAnalyzer
+    public class SA1512SingleLineCommentsMustNotBeFollowedByBlankLine : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1512SingleLineCommentsMustNotBeFollowedByBlankLine"/>
@@ -90,15 +90,10 @@
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => SupportedDiagnosticsValue;
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
-        {
-            context.RegisterCompilationStartAction(HandleCompilationStart);
-        }
-
-        private static void HandleCompilationStart(CompilationStartAnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
             var diagnosticOptions = context.Compilation.Options.SpecificDiagnosticOptions;
-            context.RegisterSyntaxTreeActionHonorExclusions(c => HandleSyntaxTreeAnalysis(c, diagnosticOptions));
+            this.RegisterSyntaxTreeActionHonorExclusions(context, c => HandleSyntaxTreeAnalysis(c, diagnosticOptions));
         }
 
         private static void HandleSyntaxTreeAnalysis(SyntaxTreeAnalysisContext context, ImmutableDictionary<string, ReportDiagnostic> specificDiagnosticOptions)

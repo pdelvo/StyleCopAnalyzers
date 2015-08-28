@@ -63,7 +63,7 @@
     /// SDK documentation tools.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1601PartialElementsMustBeDocumented : DiagnosticAnalyzer
+    public class SA1601PartialElementsMustBeDocumented : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1601PartialElementsMustBeDocumented"/> analyzer.
@@ -90,12 +90,12 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleTypeDeclaration, SyntaxKind.ClassDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleTypeDeclaration, SyntaxKind.InterfaceDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleTypeDeclaration, SyntaxKind.StructDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleMethodDeclaration, SyntaxKind.MethodDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleTypeDeclaration, SyntaxKind.ClassDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleTypeDeclaration, SyntaxKind.InterfaceDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleTypeDeclaration, SyntaxKind.StructDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleMethodDeclaration, SyntaxKind.MethodDeclaration);
         }
 
         private void HandleTypeDeclaration(SyntaxNodeAnalysisContext context)

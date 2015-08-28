@@ -27,7 +27,7 @@
     /// call.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1101PrefixLocalCallsWithThis : DiagnosticAnalyzer
+    public class SA1101PrefixLocalCallsWithThis : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1101PrefixLocalCallsWithThis"/> analyzer.
@@ -54,10 +54,10 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleMemberAccessExpression, SyntaxKind.SimpleMemberAccessExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleIdentifierName, SyntaxKind.IdentifierName);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleMemberAccessExpression, SyntaxKind.SimpleMemberAccessExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleIdentifierName, SyntaxKind.IdentifierName);
         }
 
         /// <summary>

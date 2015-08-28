@@ -15,7 +15,7 @@
     /// <para>A violation of this rule occurs when one or more blank lines are at the end of the file.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1518CodeMustNotContainBlankLinesAtEndOfFile : DiagnosticAnalyzer
+    public class SA1518CodeMustNotContainBlankLinesAtEndOfFile : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1518CodeMustNotContainBlankLinesAtEndOfFile"/> analyzer.
@@ -42,9 +42,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxTreeActionHonorExclusions(this.HandleSyntaxTreeAction);
+            this.RegisterSyntaxTreeActionHonorExclusions(context, this.HandleSyntaxTreeAction);
         }
 
         private void HandleSyntaxTreeAction(SyntaxTreeAnalysisContext context)

@@ -31,7 +31,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1116SplitParametersMustStartOnLineAfterDeclaration : DiagnosticAnalyzer
+    public class SA1116SplitParametersMustStartOnLineAfterDeclaration : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1116SplitParametersMustStartOnLineAfterDeclaration"/>
@@ -59,27 +59,29 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(
+            this.RegisterSyntaxNodeActionHonorExclusions(
+                context,
                 HandleBaseMethodDeclaration,
                 new[] { SyntaxKind.ConstructorDeclaration, SyntaxKind.MethodDeclaration, SyntaxKind.OperatorDeclaration });
 
-            context.RegisterSyntaxNodeActionHonorExclusions(
+            this.RegisterSyntaxNodeActionHonorExclusions(
+                context,
                 HandleConstructorInitializer,
                 new[] { SyntaxKind.BaseConstructorInitializer, SyntaxKind.ThisConstructorInitializer });
 
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleDelegateDeclaration, SyntaxKind.DelegateDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleIndexerDeclaration, SyntaxKind.IndexerDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleInvocation, SyntaxKind.InvocationExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleObjectCreation, SyntaxKind.ObjectCreationExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleElementAccess, SyntaxKind.ElementAccessExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleElementBinding, SyntaxKind.ElementBindingExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleImpliticElementAccess, SyntaxKind.ImplicitElementAccess);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleArrayCreation, SyntaxKind.ArrayCreationExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleAttribute, SyntaxKind.Attribute);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleAnonymousMethod, SyntaxKind.AnonymousMethodExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleLambda, SyntaxKind.ParenthesizedLambdaExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleDelegateDeclaration, SyntaxKind.DelegateDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleIndexerDeclaration, SyntaxKind.IndexerDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleInvocation, SyntaxKind.InvocationExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleObjectCreation, SyntaxKind.ObjectCreationExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleElementAccess, SyntaxKind.ElementAccessExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleElementBinding, SyntaxKind.ElementBindingExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleImpliticElementAccess, SyntaxKind.ImplicitElementAccess);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleArrayCreation, SyntaxKind.ArrayCreationExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleAttribute, SyntaxKind.Attribute);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleAnonymousMethod, SyntaxKind.AnonymousMethodExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleLambda, SyntaxKind.ParenthesizedLambdaExpression);
         }
 
         private static void HandleBaseMethodDeclaration(SyntaxNodeAnalysisContext context)

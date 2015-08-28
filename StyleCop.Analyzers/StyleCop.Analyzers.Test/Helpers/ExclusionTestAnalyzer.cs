@@ -11,7 +11,7 @@
     /// file is not excluded from code analysis.
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    internal class ExclusionTestAnalyzer : DiagnosticAnalyzer
+    internal class ExclusionTestAnalyzer : StyleCopDiagnosticAnalyzer
     {
         internal const string DiagnosticId = "SA9999";
         private const string Title = "Exclusion test";
@@ -35,9 +35,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxTreeActionHonorExclusions(this.AnalyzeTree);
+            this.RegisterSyntaxTreeActionHonorExclusions(context, this.AnalyzeTree);
         }
 
         private void AnalyzeTree(SyntaxTreeAnalysisContext context)

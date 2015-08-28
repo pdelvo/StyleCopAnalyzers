@@ -34,7 +34,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1212PropertyAccessorsMustFollowOrder : DiagnosticAnalyzer
+    public class SA1212PropertyAccessorsMustFollowOrder : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1212PropertyAccessorsMustFollowOrder"/> analyzer.
@@ -61,10 +61,10 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandlePropertyDeclaration, SyntaxKind.PropertyDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleIndexerDeclaration, SyntaxKind.IndexerDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandlePropertyDeclaration, SyntaxKind.PropertyDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleIndexerDeclaration, SyntaxKind.IndexerDeclaration);
         }
 
         private static void HandleIndexerDeclaration(SyntaxNodeAnalysisContext context)

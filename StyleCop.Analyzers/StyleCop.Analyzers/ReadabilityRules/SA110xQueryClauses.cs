@@ -1,5 +1,6 @@
 ﻿namespace StyleCop.Analyzers.ReadabilityRules
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.Immutable;
     using System.Linq;
@@ -17,7 +18,7 @@
     /// <seealso href="https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA1104.md">SA1104 Query clause must begin on new line when previous clause spans multiple lines</seealso>
     /// <seealso href="https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA1105.md">SA1105 Query clauses spanning multiple lines must begin on own line</seealso>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA110xQueryClauses : DiagnosticAnalyzer
+    public class SA110xQueryClauses : StyleCopDiagnosticAnalyzer
     {
         private const string SA1102Identifier = "SA1102";
         private const string SA1103Identifier = "SA1103";
@@ -77,9 +78,9 @@
             ImmutableArray.Create(SA1102Descriptor, SA1103Descriptor, SA1104Descriptor, SA1105Descriptor);
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleQueryExpression, SyntaxKind.QueryExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleQueryExpression, SyntaxKind.QueryExpression);
         }
 
         private static void HandleQueryExpression(SyntaxNodeAnalysisContext context)

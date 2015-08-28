@@ -21,7 +21,7 @@
     /// within a <c>NativeMethods</c> class.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1307AccessibleFieldsMustBeginWithUpperCaseLetter : DiagnosticAnalyzer
+    public class SA1307AccessibleFieldsMustBeginWithUpperCaseLetter : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1307AccessibleFieldsMustBeginWithUpperCaseLetter"/>
@@ -49,9 +49,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleFieldDeclaration, SyntaxKind.FieldDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleFieldDeclaration, SyntaxKind.FieldDeclaration);
         }
 
         private void HandleFieldDeclaration(SyntaxNodeAnalysisContext context)

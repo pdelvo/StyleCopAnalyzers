@@ -36,7 +36,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1119StatementMustNotUseUnnecessaryParenthesis : DiagnosticAnalyzer
+    public class SA1119StatementMustNotUseUnnecessaryParenthesis : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1119StatementMustNotUseUnnecessaryParenthesis"/>
@@ -73,18 +73,15 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterCompilationStartAction(startContext =>
+            // Only register the syntax node action if the diagnostic is enabled. This is important because
+            // otherwise the diagnostic for fading out the parenthesis is still active, even if the main diagnostic
+            // is disabled
+            if (context.Compilation.Options.SpecificDiagnosticOptions.GetValueOrDefault(Descriptor.Id) != Microsoft.CodeAnalysis.ReportDiagnostic.Suppress)
             {
-                // Only register the syntax node action if the diagnostic is enabled. This is important because
-                // otherwise the diagnostic for fading out the parenthesis is still active, even if the main diagnostic
-                // is disabled
-                if (startContext.Compilation.Options.SpecificDiagnosticOptions.GetValueOrDefault(Descriptor.Id) != Microsoft.CodeAnalysis.ReportDiagnostic.Suppress)
-                {
-                    startContext.RegisterSyntaxNodeActionHonorExclusions(HandleParenthesizedExpression, SyntaxKind.ParenthesizedExpression);
-                }
-            });
+                this.RegisterSyntaxNodeActionHonorExclusions(context, HandleParenthesizedExpression, SyntaxKind.ParenthesizedExpression);
+            }
         }
 
         private static void HandleParenthesizedExpression(SyntaxNodeAnalysisContext context)

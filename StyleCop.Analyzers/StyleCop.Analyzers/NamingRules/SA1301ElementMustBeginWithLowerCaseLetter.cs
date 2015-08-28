@@ -10,7 +10,7 @@
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     [NoDiagnostic("This rule has no behavior by design.")]
     [NoCodeFix("Don't fix what isn't broken.")]
-    public class SA1301ElementMustBeginWithLowerCaseLetter : DiagnosticAnalyzer
+    public class SA1301ElementMustBeginWithLowerCaseLetter : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1301ElementMustBeginWithLowerCaseLetter"/> analyzer.
@@ -37,7 +37,8 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AnalyzerPerformance", "RS1012:Start action has no registered actions.", Justification = "This diagnostic is not implemented (by design) in StyleCopAnalyzers.")]
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
             // Intentionally empty
         }

@@ -32,7 +32,7 @@
     /// the readability and maintainability of the code.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1520UseCurlyBracketsConsistently : DiagnosticAnalyzer
+    public class SA1520UseCurlyBracketsConsistently : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1520UseCurlyBracketsConsistently"/> analyzer.
@@ -59,9 +59,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleIfStatement, SyntaxKind.IfStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleIfStatement, SyntaxKind.IfStatement);
         }
 
         private void HandleIfStatement(SyntaxNodeAnalysisContext context)

@@ -19,7 +19,7 @@
     /// open parenthesis).</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1015ClosingGenericBracketsMustBeSpacedCorrectly : DiagnosticAnalyzer
+    public class SA1015ClosingGenericBracketsMustBeSpacedCorrectly : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1015ClosingGenericBracketsMustBeSpacedCorrectly"/>
@@ -47,9 +47,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxTreeActionHonorExclusions(HandleSyntaxTree);
+            this.RegisterSyntaxTreeActionHonorExclusions(context, HandleSyntaxTree);
         }
 
         private static void HandleSyntaxTree(SyntaxTreeAnalysisContext context)

@@ -47,7 +47,7 @@
     /// <c>base.</c>.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1100DoNotPrefixCallsWithBaseUnlessLocalImplementationExists : DiagnosticAnalyzer
+    public class SA1100DoNotPrefixCallsWithBaseUnlessLocalImplementationExists : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the
@@ -75,9 +75,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.AnalyzeBaseExpression, SyntaxKind.BaseExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.AnalyzeBaseExpression, SyntaxKind.BaseExpression);
         }
 
         private void AnalyzeBaseExpression(SyntaxNodeAnalysisContext context)

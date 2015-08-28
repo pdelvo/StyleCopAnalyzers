@@ -21,7 +21,7 @@
     /// <c>&lt;returns&gt;</c> tag.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1615ElementReturnValueMustBeDocumented : DiagnosticAnalyzer
+    public class SA1615ElementReturnValueMustBeDocumented : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1615ElementReturnValueMustBeDocumented"/> analyzer.
@@ -48,10 +48,10 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleMethodDeclaration, SyntaxKind.MethodDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleDelegateDeclaration, SyntaxKind.DelegateDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleMethodDeclaration, SyntaxKind.MethodDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleDelegateDeclaration, SyntaxKind.DelegateDeclaration);
         }
 
         private void HandleMethodDeclaration(SyntaxNodeAnalysisContext context)

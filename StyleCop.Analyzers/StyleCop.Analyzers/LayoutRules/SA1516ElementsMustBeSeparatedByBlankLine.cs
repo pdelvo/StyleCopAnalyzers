@@ -52,7 +52,7 @@
     /// is multi-line.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1516ElementsMustBeSeparatedByBlankLine : DiagnosticAnalyzer
+    public class SA1516ElementsMustBeSeparatedByBlankLine : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1516ElementsMustBeSeparatedByBlankLine"/> analyzer.
@@ -79,18 +79,18 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleTypeDeclaration, SyntaxKind.ClassDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleTypeDeclaration, SyntaxKind.StructDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleTypeDeclaration, SyntaxKind.InterfaceDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleTypeDeclaration, SyntaxKind.ClassDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleTypeDeclaration, SyntaxKind.StructDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleTypeDeclaration, SyntaxKind.InterfaceDeclaration);
 
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleCompilationUnit, SyntaxKind.CompilationUnit);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleNamespaceDeclaration, SyntaxKind.NamespaceDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleCompilationUnit, SyntaxKind.CompilationUnit);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleNamespaceDeclaration, SyntaxKind.NamespaceDeclaration);
 
-            context.RegisterSyntaxNodeActionHonorExclusions(HandlePropertyDeclaration, SyntaxKind.PropertyDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandlePropertyDeclaration, SyntaxKind.EventDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandlePropertyDeclaration, SyntaxKind.IndexerDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandlePropertyDeclaration, SyntaxKind.PropertyDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandlePropertyDeclaration, SyntaxKind.EventDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandlePropertyDeclaration, SyntaxKind.IndexerDeclaration);
         }
 
         private static void HandlePropertyDeclaration(SyntaxNodeAnalysisContext context)

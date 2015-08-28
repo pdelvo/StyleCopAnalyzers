@@ -34,7 +34,7 @@
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     [NoDiagnostic("This diagnostic has an unacceptable rate of false positives.")]
-    public class SA1628DocumentationTextMustBeginWithACapitalLetter : DiagnosticAnalyzer
+    public class SA1628DocumentationTextMustBeginWithACapitalLetter : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1628DocumentationTextMustBeginWithACapitalLetter"/>
@@ -62,7 +62,8 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AnalyzerPerformance", "RS1012:Start action has no registered actions.", Justification = "This diagnostic is not implemented (by design) in StyleCopAnalyzers.")]
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
             // This diagnostic is not implemented (by design) in StyleCopAnalyzers.
         }

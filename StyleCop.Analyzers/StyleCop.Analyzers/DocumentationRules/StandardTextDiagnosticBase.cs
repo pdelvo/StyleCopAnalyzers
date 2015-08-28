@@ -11,7 +11,7 @@
     /// <summary>
     /// A base class for diagnostics <see cref="SA1642ConstructorSummaryDocumentationMustBeginWithStandardText"/> and <see cref="SA1643DestructorSummaryDocumentationMustBeginWithStandardText"/> to share common code.
     /// </summary>
-    public abstract class StandardTextDiagnosticBase : DiagnosticAnalyzer
+    public abstract class StandardTextDiagnosticBase : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// Describes the result of matching a summary element to a specific desired wording.

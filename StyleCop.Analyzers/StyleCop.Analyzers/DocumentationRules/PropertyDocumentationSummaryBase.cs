@@ -9,12 +9,12 @@
     /// <summary>
     /// This is the base class for analyzers which examine the <c>&lt;value&gt;</c> text of a documentation comment on a property declaration.
     /// </summary>
-    public abstract class PropertyDocumentationSummaryBase : DiagnosticAnalyzer
+    public abstract class PropertyDocumentationSummaryBase : StyleCopDiagnosticAnalyzer
     {
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandlePropertyDeclaration, SyntaxKind.PropertyDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandlePropertyDeclaration, SyntaxKind.PropertyDeclaration);
         }
 
         /// <summary>

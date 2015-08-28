@@ -18,7 +18,7 @@
     /// the namespaces that are being used by the code.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1208SystemUsingDirectivesMustBePlacedBeforeOtherUsingDirectives : DiagnosticAnalyzer
+    public class SA1208SystemUsingDirectivesMustBePlacedBeforeOtherUsingDirectives : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the
@@ -46,10 +46,10 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleCompilationUnit, SyntaxKind.CompilationUnit);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleNamespaceDeclaration, SyntaxKind.NamespaceDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleCompilationUnit, SyntaxKind.CompilationUnit);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleNamespaceDeclaration, SyntaxKind.NamespaceDeclaration);
         }
 
         private static void HandleCompilationUnit(SyntaxNodeAnalysisContext context)

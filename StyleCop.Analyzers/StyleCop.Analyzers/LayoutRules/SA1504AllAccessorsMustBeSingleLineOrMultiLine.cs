@@ -56,7 +56,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1504AllAccessorsMustBeSingleLineOrMultiLine : DiagnosticAnalyzer
+    public class SA1504AllAccessorsMustBeSingleLineOrMultiLine : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1504AllAccessorsMustBeSingleLineOrMultiLine"/> analyzer.
@@ -84,9 +84,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleAccessorListDeclaration, SyntaxKind.AccessorList);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleAccessorListDeclaration, SyntaxKind.AccessorList);
         }
 
         private void HandleAccessorListDeclaration(SyntaxNodeAnalysisContext context)

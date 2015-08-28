@@ -20,7 +20,7 @@
     /// <para>For these reasons, trailing whitespace should be avoided.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1028CodeMustNotContainTrailingWhitespace : DiagnosticAnalyzer
+    public class SA1028CodeMustNotContainTrailingWhitespace : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1028CodeMustNotContainTrailingWhitespace"/> analyzer.
@@ -41,9 +41,9 @@
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => SupportedDiagnosticsValue;
 
         /// <inheritdoc />
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxTreeActionHonorExclusions(HandleSyntaxTree);
+            this.RegisterSyntaxTreeActionHonorExclusions(context, HandleSyntaxTree);
         }
 
         /// <summary>

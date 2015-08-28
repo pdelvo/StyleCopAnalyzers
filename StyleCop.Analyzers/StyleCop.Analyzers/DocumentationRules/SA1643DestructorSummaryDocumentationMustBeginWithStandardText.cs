@@ -93,9 +93,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleDestructor, SyntaxKind.DestructorDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleDestructor, SyntaxKind.DestructorDeclaration);
         }
 
         private void HandleDestructor(SyntaxNodeAnalysisContext context)

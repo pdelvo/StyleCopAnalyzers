@@ -71,7 +71,7 @@
     /// tags on this part of the class.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1619GenericTypeParametersMustBeDocumentedPartialClass : DiagnosticAnalyzer
+    public class SA1619GenericTypeParametersMustBeDocumentedPartialClass : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1619GenericTypeParametersMustBeDocumentedPartialClass"/>
@@ -99,11 +99,11 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleTypeDeclaration, SyntaxKind.ClassDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleTypeDeclaration, SyntaxKind.StructDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleTypeDeclaration, SyntaxKind.InterfaceDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleTypeDeclaration, SyntaxKind.ClassDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleTypeDeclaration, SyntaxKind.StructDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleTypeDeclaration, SyntaxKind.InterfaceDeclaration);
         }
 
         private void HandleTypeDeclaration(SyntaxNodeAnalysisContext context)

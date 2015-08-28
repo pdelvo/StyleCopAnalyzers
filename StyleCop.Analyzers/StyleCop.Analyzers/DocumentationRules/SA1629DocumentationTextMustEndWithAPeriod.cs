@@ -32,7 +32,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1629DocumentationTextMustEndWithAPeriod : DiagnosticAnalyzer
+    public class SA1629DocumentationTextMustEndWithAPeriod : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1629DocumentationTextMustEndWithAPeriod"/> analyzer.
@@ -59,7 +59,7 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
             // TODO: Implement analysis
         }

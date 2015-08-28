@@ -18,7 +18,7 @@
     /// </para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1216UsingStaticDirectivesMustBePlacedAfterOtherUsingDirectives : DiagnosticAnalyzer
+    public class SA1216UsingStaticDirectivesMustBePlacedAfterOtherUsingDirectives : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1216UsingStaticDirectivesMustBePlacedAfterOtherUsingDirectives"/> analyzer.
@@ -39,10 +39,10 @@
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => SupportedDiagnosticsValue;
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleCompilationUnit, SyntaxKind.CompilationUnit);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleNamespaceDeclaration, SyntaxKind.NamespaceDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleCompilationUnit, SyntaxKind.CompilationUnit);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleNamespaceDeclaration, SyntaxKind.NamespaceDeclaration);
         }
 
         private static void HandleCompilationUnit(SyntaxNodeAnalysisContext context)

@@ -23,7 +23,7 @@
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     [NoCodeFix("Trying to fix invalid xml would most likely not produce the desired result.")]
-    public class SA1603DocumentationMustContainValidXml : DiagnosticAnalyzer
+    public class SA1603DocumentationMustContainValidXml : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1603DocumentationMustContainValidXml"/> analyzer.
@@ -50,11 +50,11 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleXmlElement, SyntaxKind.XmlElement);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleXmlEmptyElement, SyntaxKind.XmlEmptyElement);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleXmlCDataSection, SyntaxKind.XmlCDataSection);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleXmlElement, SyntaxKind.XmlElement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleXmlEmptyElement, SyntaxKind.XmlEmptyElement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleXmlCDataSection, SyntaxKind.XmlCDataSection);
         }
 
         private void HandleXmlElement(SyntaxNodeAnalysisContext context)

@@ -34,7 +34,7 @@
     /// curly bracket is not followed by a blank line.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1513ClosingCurlyBracketMustBeFollowedByBlankLine : DiagnosticAnalyzer
+    public class SA1513ClosingCurlyBracketMustBeFollowedByBlankLine : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1513ClosingCurlyBracketMustBeFollowedByBlankLine"/>
@@ -62,9 +62,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxTreeActionHonorExclusions(this.HandleSyntaxTreeAction);
+            this.RegisterSyntaxTreeActionHonorExclusions(context, this.HandleSyntaxTreeAction);
         }
 
         private void HandleSyntaxTreeAction(SyntaxTreeAnalysisContext context)

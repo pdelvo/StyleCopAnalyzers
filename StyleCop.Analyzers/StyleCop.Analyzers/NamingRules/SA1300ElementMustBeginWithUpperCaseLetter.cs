@@ -26,7 +26,7 @@
     /// within a <c>NativeMethods</c> class.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1300ElementMustBeginWithUpperCaseLetter : DiagnosticAnalyzer
+    public class SA1300ElementMustBeginWithUpperCaseLetter : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1300ElementMustBeginWithUpperCaseLetter"/> analyzer.
@@ -53,19 +53,19 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
             // Note: Interfaces are handled by SA1302
             // Note: Fields are handled by SA1303 through SA1311
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleNamespaceDeclarationSyntax, SyntaxKind.NamespaceDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleClassDeclarationSyntax, SyntaxKind.ClassDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleEnumDeclarationSyntax, SyntaxKind.EnumDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleStructDeclarationSyntax, SyntaxKind.StructDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleDelegateDeclarationSyntax, SyntaxKind.DelegateDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleEventDeclarationSyntax, SyntaxKind.EventDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleEventFieldDeclarationSyntax, SyntaxKind.EventFieldDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleMethodDeclarationSyntax, SyntaxKind.MethodDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandlePropertyDeclarationSyntax, SyntaxKind.PropertyDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleNamespaceDeclarationSyntax, SyntaxKind.NamespaceDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleClassDeclarationSyntax, SyntaxKind.ClassDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleEnumDeclarationSyntax, SyntaxKind.EnumDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleStructDeclarationSyntax, SyntaxKind.StructDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleDelegateDeclarationSyntax, SyntaxKind.DelegateDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleEventDeclarationSyntax, SyntaxKind.EventDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleEventFieldDeclarationSyntax, SyntaxKind.EventFieldDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleMethodDeclarationSyntax, SyntaxKind.MethodDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandlePropertyDeclarationSyntax, SyntaxKind.PropertyDeclaration);
         }
 
         private void HandleNamespaceDeclarationSyntax(SyntaxNodeAnalysisContext context)

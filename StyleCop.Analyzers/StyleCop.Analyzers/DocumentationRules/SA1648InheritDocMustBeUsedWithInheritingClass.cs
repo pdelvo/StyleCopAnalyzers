@@ -19,7 +19,7 @@
     /// base case or implement an interface.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1648InheritDocMustBeUsedWithInheritingClass : DiagnosticAnalyzer
+    public class SA1648InheritDocMustBeUsedWithInheritingClass : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1648InheritDocMustBeUsedWithInheritingClass"/> analyzer.
@@ -46,20 +46,20 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleBaseTypeDeclarationSyntax, SyntaxKind.ClassDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleBaseTypeDeclarationSyntax, SyntaxKind.InterfaceDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleBaseTypeDeclarationSyntax, SyntaxKind.EnumDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleBaseTypeDeclarationSyntax, SyntaxKind.StructDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleBaseTypeDeclarationSyntax, SyntaxKind.DelegateDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleMemberSyntax, SyntaxKind.ConstructorDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleMemberSyntax, SyntaxKind.EventDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleMemberSyntax, SyntaxKind.MethodDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleMemberSyntax, SyntaxKind.PropertyDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleMemberSyntax, SyntaxKind.EventFieldDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleMemberSyntax, SyntaxKind.FieldDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleMemberSyntax, SyntaxKind.IndexerDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleBaseTypeDeclarationSyntax, SyntaxKind.ClassDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleBaseTypeDeclarationSyntax, SyntaxKind.InterfaceDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleBaseTypeDeclarationSyntax, SyntaxKind.EnumDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleBaseTypeDeclarationSyntax, SyntaxKind.StructDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleBaseTypeDeclarationSyntax, SyntaxKind.DelegateDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleMemberSyntax, SyntaxKind.ConstructorDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleMemberSyntax, SyntaxKind.EventDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleMemberSyntax, SyntaxKind.MethodDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleMemberSyntax, SyntaxKind.PropertyDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleMemberSyntax, SyntaxKind.EventFieldDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleMemberSyntax, SyntaxKind.FieldDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleMemberSyntax, SyntaxKind.IndexerDeclaration);
         }
 
         private static void HandleBaseTypeDeclarationSyntax(SyntaxNodeAnalysisContext context)

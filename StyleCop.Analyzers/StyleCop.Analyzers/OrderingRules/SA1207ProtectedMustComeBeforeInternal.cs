@@ -18,7 +18,7 @@
     /// these access levels are indeed the same.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1207ProtectedMustComeBeforeInternal : DiagnosticAnalyzer
+    public class SA1207ProtectedMustComeBeforeInternal : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1207ProtectedMustComeBeforeInternal"/> analyzer.
@@ -45,9 +45,10 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(
+            this.RegisterSyntaxNodeActionHonorExclusions(
+                context,
                 HandleDeclaration,
                 SyntaxKind.ClassDeclaration,
                 SyntaxKind.DelegateDeclaration,

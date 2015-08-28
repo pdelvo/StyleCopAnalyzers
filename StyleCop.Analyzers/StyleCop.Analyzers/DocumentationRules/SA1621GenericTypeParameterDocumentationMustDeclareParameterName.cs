@@ -22,7 +22,7 @@
     /// header documentation which does not declare the name of the type parameter.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1621GenericTypeParameterDocumentationMustDeclareParameterName : DiagnosticAnalyzer
+    public class SA1621GenericTypeParameterDocumentationMustDeclareParameterName : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the
@@ -50,10 +50,10 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleXmlElement, SyntaxKind.XmlElement);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleXmlEmptyElement, SyntaxKind.XmlEmptyElement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleXmlElement, SyntaxKind.XmlElement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleXmlEmptyElement, SyntaxKind.XmlEmptyElement);
         }
 
         private static void HandleXmlElement(SyntaxNodeAnalysisContext context)

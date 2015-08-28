@@ -28,7 +28,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1410RemoveDelegateParenthesisWhenPossible : DiagnosticAnalyzer
+    public class SA1410RemoveDelegateParenthesisWhenPossible : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1410RemoveDelegateParenthesisWhenPossible"/> analyzer.
@@ -55,9 +55,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleAnonymousMethodExpressionSyntax, SyntaxKind.AnonymousMethodExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleAnonymousMethodExpressionSyntax, SyntaxKind.AnonymousMethodExpression);
         }
 
         private void HandleAnonymousMethodExpressionSyntax(SyntaxNodeAnalysisContext context)

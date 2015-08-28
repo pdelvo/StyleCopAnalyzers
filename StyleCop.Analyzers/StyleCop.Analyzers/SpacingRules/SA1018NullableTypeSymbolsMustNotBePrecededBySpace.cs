@@ -17,7 +17,7 @@
     /// <para>A nullable type symbol should never be preceded by whitespace.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1018NullableTypeSymbolsMustNotBePrecededBySpace : DiagnosticAnalyzer
+    public class SA1018NullableTypeSymbolsMustNotBePrecededBySpace : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1018NullableTypeSymbolsMustNotBePrecededBySpace"/>
@@ -45,9 +45,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleQuestionToken, SyntaxKind.NullableType);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleQuestionToken, SyntaxKind.NullableType);
         }
 
         private void HandleQuestionToken(SyntaxNodeAnalysisContext context)

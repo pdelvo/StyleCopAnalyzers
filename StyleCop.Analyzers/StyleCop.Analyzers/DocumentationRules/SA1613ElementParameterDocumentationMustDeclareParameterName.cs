@@ -22,7 +22,7 @@
     /// which is missing a <c>name</c> attribute, or which contains an empty <c>name</c> attribute.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1613ElementParameterDocumentationMustDeclareParameterName : DiagnosticAnalyzer
+    public class SA1613ElementParameterDocumentationMustDeclareParameterName : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the
@@ -50,10 +50,10 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleXmlElement, SyntaxKind.XmlElement);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleXmlEmptyElement, SyntaxKind.XmlEmptyElement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleXmlElement, SyntaxKind.XmlElement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleXmlEmptyElement, SyntaxKind.XmlEmptyElement);
         }
 
         private static void HandleXmlElement(SyntaxNodeAnalysisContext context)

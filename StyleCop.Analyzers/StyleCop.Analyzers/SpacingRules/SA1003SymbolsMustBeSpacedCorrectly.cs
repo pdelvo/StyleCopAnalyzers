@@ -39,7 +39,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1003SymbolsMustBeSpacedCorrectly : DiagnosticAnalyzer
+    public class SA1003SymbolsMustBeSpacedCorrectly : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1003SymbolsMustBeSpacedCorrectly"/> analyzer.
@@ -123,18 +123,18 @@
             ImmutableArray.Create(DescriptorPrecededByWhitespace);
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleConstructorDeclaration, SyntaxKind.ConstructorDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleConditionalExpression, SyntaxKind.ConditionalExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleTypeParameterConstraint, SyntaxKind.TypeParameterConstraintClause);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleBinaryExpression, SyntaxKind.CoalesceExpression, SyntaxKind.IsExpression, SyntaxKind.AsExpression, SyntaxKind.BitwiseOrExpression, SyntaxKind.ExclusiveOrExpression, SyntaxKind.BitwiseAndExpression, SyntaxKind.EqualsExpression, SyntaxKind.NotEqualsExpression, SyntaxKind.LessThanExpression, SyntaxKind.LessThanOrEqualExpression, SyntaxKind.GreaterThanExpression, SyntaxKind.GreaterThanOrEqualExpression, SyntaxKind.LeftShiftExpression, SyntaxKind.RightShiftExpression, SyntaxKind.AddExpression, SyntaxKind.SubtractExpression, SyntaxKind.MultiplyExpression, SyntaxKind.DivideExpression, SyntaxKind.ModuloExpression, SyntaxKind.LogicalAndExpression, SyntaxKind.LogicalOrExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandlePrefixUnaryExpression, SyntaxKind.UnaryPlusExpression, SyntaxKind.UnaryMinusExpression, SyntaxKind.BitwiseNotExpression, SyntaxKind.LogicalNotExpression, SyntaxKind.PreIncrementExpression, SyntaxKind.PreDecrementExpression, SyntaxKind.AddressOfExpression, SyntaxKind.PointerIndirectionExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandlePostfixUnaryExpression, SyntaxKind.PostIncrementExpression, SyntaxKind.PostDecrementExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleAssignmentExpression, SyntaxKind.OrAssignmentExpression, SyntaxKind.AndAssignmentExpression, SyntaxKind.ExclusiveOrAssignmentExpression, SyntaxKind.LeftShiftAssignmentExpression, SyntaxKind.RightShiftAssignmentExpression, SyntaxKind.AddAssignmentExpression, SyntaxKind.SubtractAssignmentExpression, SyntaxKind.MultiplyAssignmentExpression, SyntaxKind.DivideAssignmentExpression, SyntaxKind.ModuloAssignmentExpression, SyntaxKind.SimpleAssignmentExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleCastExpression, SyntaxKind.CastExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleEqualsValueClause, SyntaxKind.EqualsValueClause);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleLambdaExpression, SyntaxKind.ParenthesizedLambdaExpression, SyntaxKind.SimpleLambdaExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleConstructorDeclaration, SyntaxKind.ConstructorDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleConditionalExpression, SyntaxKind.ConditionalExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleTypeParameterConstraint, SyntaxKind.TypeParameterConstraintClause);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleBinaryExpression, SyntaxKind.CoalesceExpression, SyntaxKind.IsExpression, SyntaxKind.AsExpression, SyntaxKind.BitwiseOrExpression, SyntaxKind.ExclusiveOrExpression, SyntaxKind.BitwiseAndExpression, SyntaxKind.EqualsExpression, SyntaxKind.NotEqualsExpression, SyntaxKind.LessThanExpression, SyntaxKind.LessThanOrEqualExpression, SyntaxKind.GreaterThanExpression, SyntaxKind.GreaterThanOrEqualExpression, SyntaxKind.LeftShiftExpression, SyntaxKind.RightShiftExpression, SyntaxKind.AddExpression, SyntaxKind.SubtractExpression, SyntaxKind.MultiplyExpression, SyntaxKind.DivideExpression, SyntaxKind.ModuloExpression, SyntaxKind.LogicalAndExpression, SyntaxKind.LogicalOrExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandlePrefixUnaryExpression, SyntaxKind.UnaryPlusExpression, SyntaxKind.UnaryMinusExpression, SyntaxKind.BitwiseNotExpression, SyntaxKind.LogicalNotExpression, SyntaxKind.PreIncrementExpression, SyntaxKind.PreDecrementExpression, SyntaxKind.AddressOfExpression, SyntaxKind.PointerIndirectionExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandlePostfixUnaryExpression, SyntaxKind.PostIncrementExpression, SyntaxKind.PostDecrementExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleAssignmentExpression, SyntaxKind.OrAssignmentExpression, SyntaxKind.AndAssignmentExpression, SyntaxKind.ExclusiveOrAssignmentExpression, SyntaxKind.LeftShiftAssignmentExpression, SyntaxKind.RightShiftAssignmentExpression, SyntaxKind.AddAssignmentExpression, SyntaxKind.SubtractAssignmentExpression, SyntaxKind.MultiplyAssignmentExpression, SyntaxKind.DivideAssignmentExpression, SyntaxKind.ModuloAssignmentExpression, SyntaxKind.SimpleAssignmentExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleCastExpression, SyntaxKind.CastExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleEqualsValueClause, SyntaxKind.EqualsValueClause);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleLambdaExpression, SyntaxKind.ParenthesizedLambdaExpression, SyntaxKind.SimpleLambdaExpression);
         }
 
         private static void HandleConstructorDeclaration(SyntaxNodeAnalysisContext context)

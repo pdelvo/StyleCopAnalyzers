@@ -27,7 +27,7 @@
     /// <para>Placeholder elements should be reviewed and removed from documentation.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1651DoNotUsePlaceholderElements : DiagnosticAnalyzer
+    public class SA1651DoNotUsePlaceholderElements : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1651DoNotUsePlaceholderElements"/>
@@ -55,10 +55,10 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleXmlElement, SyntaxKind.XmlElement);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleXmlEmptyElement, SyntaxKind.XmlEmptyElement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleXmlElement, SyntaxKind.XmlElement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleXmlEmptyElement, SyntaxKind.XmlEmptyElement);
         }
 
         private void HandleXmlElement(SyntaxNodeAnalysisContext context)

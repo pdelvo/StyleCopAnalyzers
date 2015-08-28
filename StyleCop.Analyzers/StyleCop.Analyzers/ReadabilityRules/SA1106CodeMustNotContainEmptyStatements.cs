@@ -14,7 +14,7 @@
     /// an extra, empty statement in the code.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1106CodeMustNotContainEmptyStatements : DiagnosticAnalyzer
+    public class SA1106CodeMustNotContainEmptyStatements : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1106CodeMustNotContainEmptyStatements"/> analyzer.
@@ -41,14 +41,14 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleEmptyStatementSyntax, SyntaxKind.EmptyStatement);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleTypeSyntax, SyntaxKind.ClassDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleTypeSyntax, SyntaxKind.StructDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleTypeSyntax, SyntaxKind.InterfaceDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleTypeSyntax, SyntaxKind.EnumDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleNamespaceSyntax, SyntaxKind.NamespaceDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleEmptyStatementSyntax, SyntaxKind.EmptyStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleTypeSyntax, SyntaxKind.ClassDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleTypeSyntax, SyntaxKind.StructDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleTypeSyntax, SyntaxKind.InterfaceDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleTypeSyntax, SyntaxKind.EnumDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleNamespaceSyntax, SyntaxKind.NamespaceDeclaration);
         }
 
         private void HandleTypeSyntax(SyntaxNodeAnalysisContext context)

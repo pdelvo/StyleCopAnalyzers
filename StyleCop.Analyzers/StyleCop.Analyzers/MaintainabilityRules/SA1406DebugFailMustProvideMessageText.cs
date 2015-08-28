@@ -46,9 +46,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleMethodCall, SyntaxKind.InvocationExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleMethodCall, SyntaxKind.InvocationExpression);
         }
 
         private void HandleMethodCall(SyntaxNodeAnalysisContext context)

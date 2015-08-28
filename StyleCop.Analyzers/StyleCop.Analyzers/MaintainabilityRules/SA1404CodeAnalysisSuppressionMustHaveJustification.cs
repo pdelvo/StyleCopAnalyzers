@@ -25,7 +25,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1404CodeAnalysisSuppressionMustHaveJustification : DiagnosticAnalyzer
+    public class SA1404CodeAnalysisSuppressionMustHaveJustification : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The placeholder to insert as part of the code fix.
@@ -58,15 +58,10 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
-        {
-            context.RegisterCompilationStartAction(HandleCompilationStart);
-        }
-
-        private static void HandleCompilationStart(CompilationStartAnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
             AnalyzerInstance instance = new AnalyzerInstance();
-            context.RegisterSyntaxNodeActionHonorExclusions(instance.HandleAttributeNode, SyntaxKind.Attribute);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, instance.HandleAttributeNode, SyntaxKind.Attribute);
         }
 
         /// <summary>

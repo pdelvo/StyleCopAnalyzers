@@ -15,7 +15,7 @@
     /// <para>A violation of this rule occurs when one or more blank lines are at the start of the file.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1517CodeMustNotContainBlankLinesAtStartOfFile : DiagnosticAnalyzer
+    public class SA1517CodeMustNotContainBlankLinesAtStartOfFile : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1517CodeMustNotContainBlankLinesAtStartOfFile"/>
@@ -43,9 +43,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxTreeActionHonorExclusions(this.HandleSyntaxTreeAnalysis);
+            this.RegisterSyntaxTreeActionHonorExclusions(context, this.HandleSyntaxTreeAnalysis);
         }
 
         private void HandleSyntaxTreeAnalysis(SyntaxTreeAnalysisContext context)

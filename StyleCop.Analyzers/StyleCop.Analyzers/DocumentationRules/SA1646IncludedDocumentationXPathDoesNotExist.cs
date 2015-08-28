@@ -32,7 +32,7 @@
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     [NoDiagnostic("This is already handled by the compiler with warning CS1589.")]
     [NoCodeFix("Cannot generate documentation")]
-    public class SA1646IncludedDocumentationXPathDoesNotExist : DiagnosticAnalyzer
+    public class SA1646IncludedDocumentationXPathDoesNotExist : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1646IncludedDocumentationXPathDoesNotExist"/> analyzer.
@@ -59,7 +59,8 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AnalyzerPerformance", "RS1012:Start action has no registered actions.", Justification = "This diagnostic is not implemented (by design) in StyleCopAnalyzers.")]
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
             // This diagnostic is not implemented (by design) in StyleCopAnalyzers.
         }

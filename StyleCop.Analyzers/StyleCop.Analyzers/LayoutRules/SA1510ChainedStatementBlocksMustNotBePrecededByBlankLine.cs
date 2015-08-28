@@ -33,7 +33,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1510ChainedStatementBlocksMustNotBePrecededByBlankLine : DiagnosticAnalyzer
+    public class SA1510ChainedStatementBlocksMustNotBePrecededByBlankLine : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the
@@ -61,11 +61,11 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleElseStatement, SyntaxKind.ElseClause);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleCatchClause, SyntaxKind.CatchClause);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleFinallyClause, SyntaxKind.FinallyClause);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleElseStatement, SyntaxKind.ElseClause);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleCatchClause, SyntaxKind.CatchClause);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleFinallyClause, SyntaxKind.FinallyClause);
         }
 
         private void HandleElseStatement(SyntaxNodeAnalysisContext context)

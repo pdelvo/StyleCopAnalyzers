@@ -32,7 +32,7 @@
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     [NoCodeFix("Cannot generate documentation")]
-    public class SA1627DocumentationTextMustNotBeEmpty : DiagnosticAnalyzer
+    public class SA1627DocumentationTextMustNotBeEmpty : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1627DocumentationTextMustNotBeEmpty"/> analyzer.
@@ -59,7 +59,7 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
             // TODO: Implement analysis
         }

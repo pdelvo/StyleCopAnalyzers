@@ -169,9 +169,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleConstructorDeclaration, SyntaxKind.ConstructorDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleConstructorDeclaration, SyntaxKind.ConstructorDeclaration);
         }
 
         private void HandleConstructorDeclaration(SyntaxNodeAnalysisContext context)

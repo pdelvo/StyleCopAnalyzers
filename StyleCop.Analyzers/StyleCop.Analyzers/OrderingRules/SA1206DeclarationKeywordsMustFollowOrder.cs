@@ -26,7 +26,7 @@
     /// level than needed.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1206DeclarationKeywordsMustFollowOrder : DiagnosticAnalyzer
+    public class SA1206DeclarationKeywordsMustFollowOrder : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1206DeclarationKeywordsMustFollowOrder"/> analyzer.
@@ -76,9 +76,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleDeclaration, SyntaxKind.ClassDeclaration, SyntaxKind.StructDeclaration, SyntaxKind.InterfaceDeclaration,
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleDeclaration, SyntaxKind.ClassDeclaration, SyntaxKind.StructDeclaration, SyntaxKind.InterfaceDeclaration,
                 SyntaxKind.EnumDeclaration, SyntaxKind.DelegateDeclaration, SyntaxKind.FieldDeclaration, SyntaxKind.MethodDeclaration,
                 SyntaxKind.PropertyDeclaration, SyntaxKind.EventDeclaration, SyntaxKind.EventFieldDeclaration, SyntaxKind.IndexerDeclaration,
                 SyntaxKind.OperatorDeclaration, SyntaxKind.ConversionOperatorDeclaration, SyntaxKind.ConstructorDeclaration);

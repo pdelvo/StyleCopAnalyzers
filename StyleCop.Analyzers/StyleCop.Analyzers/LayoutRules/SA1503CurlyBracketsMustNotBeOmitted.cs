@@ -51,7 +51,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1503CurlyBracketsMustNotBeOmitted : DiagnosticAnalyzer
+    public class SA1503CurlyBracketsMustNotBeOmitted : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1503CurlyBracketsMustNotBeOmitted"/> analyzer.
@@ -78,16 +78,16 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleIfStatement, SyntaxKind.IfStatement);
-            context.RegisterSyntaxNodeActionHonorExclusions(ctx => CheckChildStatement(ctx, ((DoStatementSyntax)ctx.Node).Statement), SyntaxKind.DoStatement);
-            context.RegisterSyntaxNodeActionHonorExclusions(ctx => CheckChildStatement(ctx, ((WhileStatementSyntax)ctx.Node).Statement), SyntaxKind.WhileStatement);
-            context.RegisterSyntaxNodeActionHonorExclusions(ctx => CheckChildStatement(ctx, ((ForStatementSyntax)ctx.Node).Statement), SyntaxKind.ForStatement);
-            context.RegisterSyntaxNodeActionHonorExclusions(ctx => CheckChildStatement(ctx, ((ForEachStatementSyntax)ctx.Node).Statement), SyntaxKind.ForEachStatement);
-            context.RegisterSyntaxNodeActionHonorExclusions(ctx => CheckChildStatement(ctx, ((FixedStatementSyntax)ctx.Node).Statement), SyntaxKind.FixedStatement);
-            context.RegisterSyntaxNodeActionHonorExclusions(ctx => CheckChildStatement(ctx, ((UsingStatementSyntax)ctx.Node).Statement), SyntaxKind.UsingStatement);
-            context.RegisterSyntaxNodeActionHonorExclusions(ctx => CheckChildStatement(ctx, ((LockStatementSyntax)ctx.Node).Statement), SyntaxKind.LockStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleIfStatement, SyntaxKind.IfStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, ctx => CheckChildStatement(ctx, ((DoStatementSyntax)ctx.Node).Statement), SyntaxKind.DoStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, ctx => CheckChildStatement(ctx, ((WhileStatementSyntax)ctx.Node).Statement), SyntaxKind.WhileStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, ctx => CheckChildStatement(ctx, ((ForStatementSyntax)ctx.Node).Statement), SyntaxKind.ForStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, ctx => CheckChildStatement(ctx, ((ForEachStatementSyntax)ctx.Node).Statement), SyntaxKind.ForEachStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, ctx => CheckChildStatement(ctx, ((FixedStatementSyntax)ctx.Node).Statement), SyntaxKind.FixedStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, ctx => CheckChildStatement(ctx, ((UsingStatementSyntax)ctx.Node).Statement), SyntaxKind.UsingStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, ctx => CheckChildStatement(ctx, ((LockStatementSyntax)ctx.Node).Statement), SyntaxKind.LockStatement);
         }
 
         private static void HandleIfStatement(SyntaxNodeAnalysisContext context)

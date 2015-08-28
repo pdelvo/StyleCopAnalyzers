@@ -9,7 +9,7 @@
     /// A base class for <see cref="System.Diagnostics.Debug"/> diagnostics.
     /// It is used to share code in diagnostics <see cref="SA1405DebugAssertMustProvideMessageText"/> and <see cref="SA1406DebugFailMustProvideMessageText"/>
     /// </summary>
-    public abstract class SystemDiagnosticsDebugDiagnosticBase : DiagnosticAnalyzer
+    public abstract class SystemDiagnosticsDebugDiagnosticBase : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// Analyzes a <see cref="InvocationExpressionSyntax"/> node to add a diagnostic to static method calls in <see cref="System.Diagnostics.Debug"/>.

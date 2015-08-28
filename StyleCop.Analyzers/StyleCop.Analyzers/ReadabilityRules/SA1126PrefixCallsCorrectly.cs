@@ -19,7 +19,7 @@
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     [NoDiagnostic("Roslyn provides the ability to create well-defined rules for specific use cases, removing the need for this vaguely-worded diagnostic.")]
-    public class SA1126PrefixCallsCorrectly : DiagnosticAnalyzer
+    public class SA1126PrefixCallsCorrectly : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1126PrefixCallsCorrectly"/> analyzer.
@@ -46,7 +46,8 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AnalyzerPerformance", "RS1012:Start action has no registered actions.", Justification = "This diagnostic is not implemented (by design) in StyleCopAnalyzers.")]
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
             // This diagnostic is not implemented (by design) in StyleCopAnalyzers.
         }

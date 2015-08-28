@@ -34,7 +34,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1213EventAccessorsMustFollowOrder : DiagnosticAnalyzer
+    public class SA1213EventAccessorsMustFollowOrder : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1213EventAccessorsMustFollowOrder"/> analyzer.
@@ -61,9 +61,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleEventDeclaration, SyntaxKind.EventDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleEventDeclaration, SyntaxKind.EventDeclaration);
         }
 
         private void HandleEventDeclaration(SyntaxNodeAnalysisContext context)

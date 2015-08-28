@@ -20,7 +20,7 @@
     /// within a <c>NativeMethods</c> class.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1303ConstFieldNamesMustBeginWithUpperCaseLetter : DiagnosticAnalyzer
+    public class SA1303ConstFieldNamesMustBeginWithUpperCaseLetter : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1303ConstFieldNamesMustBeginWithUpperCaseLetter"/>
@@ -48,7 +48,7 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
             context.RegisterSymbolAction(this.HandleFieldDeclaration, SymbolKind.Field);
         }
@@ -87,7 +87,7 @@
                         return;
                     }
 
-                    if (location.SourceTree.IsGeneratedDocument(context.CancellationToken))
+                    if (this.IsGeneratedDocument(location.SourceTree, context.CancellationToken))
                     {
                         return;
                     }

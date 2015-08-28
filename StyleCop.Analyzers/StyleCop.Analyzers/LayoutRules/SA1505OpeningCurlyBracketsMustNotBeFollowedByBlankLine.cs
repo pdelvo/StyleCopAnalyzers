@@ -35,7 +35,7 @@
     /// curly brackets are followed by blank lines.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1505OpeningCurlyBracketsMustNotBeFollowedByBlankLine : DiagnosticAnalyzer
+    public class SA1505OpeningCurlyBracketsMustNotBeFollowedByBlankLine : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1505OpeningCurlyBracketsMustNotBeFollowedByBlankLine"/>
@@ -57,15 +57,15 @@
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => SupportedDiagnosticsValue;
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleBlock, SyntaxKind.Block);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleInitializers, SyntaxKind.ObjectInitializerExpression, SyntaxKind.CollectionInitializerExpression, SyntaxKind.ArrayInitializerExpression, SyntaxKind.ComplexElementInitializerExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleAnonymousObjectCreation, SyntaxKind.AnonymousObjectCreationExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleSwitchStatement, SyntaxKind.SwitchStatement);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleNamespaceDeclaration, SyntaxKind.NamespaceDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleTypeDeclaration, SyntaxKind.ClassDeclaration, SyntaxKind.StructDeclaration, SyntaxKind.InterfaceDeclaration, SyntaxKind.EnumDeclaration);
-            context.RegisterSyntaxNodeActionHonorExclusions(HandleAccessorList, SyntaxKind.AccessorList);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleBlock, SyntaxKind.Block);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleInitializers, SyntaxKind.ObjectInitializerExpression, SyntaxKind.CollectionInitializerExpression, SyntaxKind.ArrayInitializerExpression, SyntaxKind.ComplexElementInitializerExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleAnonymousObjectCreation, SyntaxKind.AnonymousObjectCreationExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleSwitchStatement, SyntaxKind.SwitchStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleNamespaceDeclaration, SyntaxKind.NamespaceDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleTypeDeclaration, SyntaxKind.ClassDeclaration, SyntaxKind.StructDeclaration, SyntaxKind.InterfaceDeclaration, SyntaxKind.EnumDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, HandleAccessorList, SyntaxKind.AccessorList);
         }
 
         private static void HandleBlock(SyntaxNodeAnalysisContext context)

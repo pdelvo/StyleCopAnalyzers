@@ -145,7 +145,7 @@
     /// are placed outside of the namespace.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1200UsingDirectivesMustBePlacedWithinNamespace : DiagnosticAnalyzer
+    public class SA1200UsingDirectivesMustBePlacedWithinNamespace : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1200UsingDirectivesMustBePlacedWithinNamespace"/>
@@ -173,9 +173,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleCompilationUnitSyntax, SyntaxKind.CompilationUnit);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleCompilationUnitSyntax, SyntaxKind.CompilationUnit);
         }
 
         private void HandleCompilationUnitSyntax(SyntaxNodeAnalysisContext context)

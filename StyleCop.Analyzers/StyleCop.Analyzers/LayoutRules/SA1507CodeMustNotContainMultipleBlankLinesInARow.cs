@@ -34,7 +34,7 @@
     /// row.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1507CodeMustNotContainMultipleBlankLinesInARow : DiagnosticAnalyzer
+    public class SA1507CodeMustNotContainMultipleBlankLinesInARow : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1507CodeMustNotContainMultipleBlankLinesInARow"/>
@@ -62,9 +62,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxTreeActionHonorExclusions(HandleSyntaxTreeAnalysis);
+            this.RegisterSyntaxTreeActionHonorExclusions(context, HandleSyntaxTreeAnalysis);
         }
 
         private static void HandleSyntaxTreeAnalysis(SyntaxTreeAnalysisContext context)

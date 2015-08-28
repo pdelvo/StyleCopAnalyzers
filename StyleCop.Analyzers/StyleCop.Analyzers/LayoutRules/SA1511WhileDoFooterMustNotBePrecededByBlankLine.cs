@@ -28,7 +28,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1511WhileDoFooterMustNotBePrecededByBlankLine : DiagnosticAnalyzer
+    public class SA1511WhileDoFooterMustNotBePrecededByBlankLine : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1511WhileDoFooterMustNotBePrecededByBlankLine"/>
@@ -50,9 +50,9 @@
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => SupportedDiagnosticsValue;
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleDoStatement, SyntaxKind.DoStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleDoStatement, SyntaxKind.DoStatement);
         }
 
         private void HandleDoStatement(SyntaxNodeAnalysisContext context)

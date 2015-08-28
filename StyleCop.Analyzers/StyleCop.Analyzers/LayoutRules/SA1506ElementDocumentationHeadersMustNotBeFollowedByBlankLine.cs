@@ -31,7 +31,7 @@
     /// a blank line.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1506ElementDocumentationHeadersMustNotBeFollowedByBlankLine : DiagnosticAnalyzer
+    public class SA1506ElementDocumentationHeadersMustNotBeFollowedByBlankLine : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the
@@ -53,9 +53,10 @@
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => SupportedDiagnosticsValue;
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(
+            this.RegisterSyntaxNodeActionHonorExclusions(
+                context,
                 this.HandleDeclaration,
                 SyntaxKind.ClassDeclaration,
                 SyntaxKind.StructDeclaration,

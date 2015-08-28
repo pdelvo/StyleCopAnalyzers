@@ -14,7 +14,7 @@
     /// letter.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1311StaticReadonlyFieldsMustBeginWithUpperCaseLetter : DiagnosticAnalyzer
+    public class SA1311StaticReadonlyFieldsMustBeginWithUpperCaseLetter : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1311StaticReadonlyFieldsMustBeginWithUpperCaseLetter"/>
@@ -42,9 +42,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleFieldDeclarationm, SyntaxKind.FieldDeclaration);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleFieldDeclarationm, SyntaxKind.FieldDeclaration);
         }
 
         private void HandleFieldDeclarationm(SyntaxNodeAnalysisContext context)

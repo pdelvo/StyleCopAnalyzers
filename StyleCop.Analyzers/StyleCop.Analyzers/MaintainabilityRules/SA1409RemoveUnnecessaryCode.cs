@@ -49,7 +49,7 @@
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     [NoDiagnostic("This diagnostic requires deep semantic analysis which is more suited to a usage-based analysis toolset as opposed to a style-based analysis toolset.")]
-    public class SA1409RemoveUnnecessaryCode : DiagnosticAnalyzer
+    public class SA1409RemoveUnnecessaryCode : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1409RemoveUnnecessaryCode"/> analyzer.
@@ -76,7 +76,8 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AnalyzerPerformance", "RS1012:Start action has no registered actions.", Justification = "This diagnostic is not implemented (by design) in StyleCopAnalyzers.")]
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
             // This diagnostic is not implemented (by design) in StyleCopAnalyzers.
         }

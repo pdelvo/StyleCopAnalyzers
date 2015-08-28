@@ -47,7 +47,7 @@
     /// reader to make assumptions about the code.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1408ConditionalExpressionsMustDeclarePrecedence : DiagnosticAnalyzer
+    public class SA1408ConditionalExpressionsMustDeclarePrecedence : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1408ConditionalExpressionsMustDeclarePrecedence"/>
@@ -75,10 +75,10 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleLogicalExpression, SyntaxKind.LogicalAndExpression);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleLogicalExpression, SyntaxKind.LogicalOrExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleLogicalExpression, SyntaxKind.LogicalAndExpression);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleLogicalExpression, SyntaxKind.LogicalOrExpression);
         }
 
         private void HandleLogicalExpression(SyntaxNodeAnalysisContext context)

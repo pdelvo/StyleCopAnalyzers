@@ -18,7 +18,7 @@
     /// decisions as the code is maintained over time.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1123DoNotPlaceRegionsWithinElements : DiagnosticAnalyzer
+    public class SA1123DoNotPlaceRegionsWithinElements : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1123DoNotPlaceRegionsWithinElements"/> analyzer.
@@ -42,12 +42,6 @@
             {
                 return SupportedDiagnosticsValue;
             }
-        }
-
-        /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
-        {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleRegionDirectiveTrivia, SyntaxKind.RegionDirectiveTrivia);
         }
 
         /// <summary>
@@ -86,6 +80,12 @@
             }
 
             return true;
+        }
+
+        /// <inheritdoc/>
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
+        {
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleRegionDirectiveTrivia, SyntaxKind.RegionDirectiveTrivia);
         }
 
         private void HandleRegionDirectiveTrivia(SyntaxNodeAnalysisContext context)

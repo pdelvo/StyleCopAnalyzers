@@ -26,7 +26,7 @@
     /// multiple lines, to increase the readability and maintainability of the code.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1519CurlyBracketsMustNotBeOmittedFromMultiLineChildStatement : DiagnosticAnalyzer
+    public class SA1519CurlyBracketsMustNotBeOmittedFromMultiLineChildStatement : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1519CurlyBracketsMustNotBeOmittedFromMultiLineChildStatement"/> analyzer.
@@ -53,13 +53,13 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleIfStatement, SyntaxKind.IfStatement);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleDoStatement, SyntaxKind.DoStatement);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleWhileStatement, SyntaxKind.WhileStatement);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleForStatement, SyntaxKind.ForStatement);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleForEachStatement, SyntaxKind.ForEachStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleIfStatement, SyntaxKind.IfStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleDoStatement, SyntaxKind.DoStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleWhileStatement, SyntaxKind.WhileStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleForStatement, SyntaxKind.ForStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleForEachStatement, SyntaxKind.ForEachStatement);
         }
 
         private void HandleIfStatement(SyntaxNodeAnalysisContext context)

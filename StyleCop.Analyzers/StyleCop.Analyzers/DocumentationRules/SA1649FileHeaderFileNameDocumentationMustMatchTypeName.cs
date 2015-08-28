@@ -53,7 +53,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1649FileHeaderFileNameDocumentationMustMatchTypeName : DiagnosticAnalyzer
+    public class SA1649FileHeaderFileNameDocumentationMustMatchTypeName : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1649FileHeaderFileNameDocumentationMustMatchTypeName"/>
@@ -81,7 +81,7 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
             // TODO: Implement analysis
         }

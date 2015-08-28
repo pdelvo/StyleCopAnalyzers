@@ -43,7 +43,7 @@
     /// </code>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1108BlockStatementsMustNotContainEmbeddedComments : DiagnosticAnalyzer
+    public class SA1108BlockStatementsMustNotContainEmbeddedComments : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1108BlockStatementsMustNotContainEmbeddedComments"/>
@@ -82,10 +82,10 @@
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => SupportedDiagnosticsValue;
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.AnalyzeBlock, SyntaxKind.Block);
-            context.RegisterSyntaxNodeActionHonorExclusions(this.AnalyzeSwitch, SyntaxKind.SwitchStatement);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.AnalyzeBlock, SyntaxKind.Block);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.AnalyzeSwitch, SyntaxKind.SwitchStatement);
         }
 
         private void AnalyzeSwitch(SyntaxNodeAnalysisContext context)

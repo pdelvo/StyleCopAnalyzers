@@ -21,7 +21,7 @@
     /// <para>It is also possible to place multiple parts of the same partial class within the same file.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1402FileMayOnlyContainASingleClass : DiagnosticAnalyzer
+    public class SA1402FileMayOnlyContainASingleClass : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1402FileMayOnlyContainASingleClass"/> analyzer.
@@ -48,9 +48,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxTreeActionHonorExclusions(this.HandleSyntaxTree);
+            this.RegisterSyntaxTreeActionHonorExclusions(context, this.HandleSyntaxTree);
         }
 
         private void HandleSyntaxTree(SyntaxTreeAnalysisContext context)

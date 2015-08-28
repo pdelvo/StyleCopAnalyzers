@@ -16,7 +16,7 @@
     /// time.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1124DoNotUseRegions : DiagnosticAnalyzer
+    public class SA1124DoNotUseRegions : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1124DoNotUseRegions"/> analyzer.
@@ -43,9 +43,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleRegionDirectiveTrivia, SyntaxKind.RegionDirectiveTrivia);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleRegionDirectiveTrivia, SyntaxKind.RegionDirectiveTrivia);
         }
 
         private void HandleRegionDirectiveTrivia(SyntaxNodeAnalysisContext context)

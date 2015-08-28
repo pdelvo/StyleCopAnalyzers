@@ -17,7 +17,7 @@
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     [NoCodeFix("Provided by Visual Studio")]
-    public class SA1125UseShorthandForNullableTypes : DiagnosticAnalyzer
+    public class SA1125UseShorthandForNullableTypes : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1125UseShorthandForNullableTypes"/> analyzer.
@@ -44,9 +44,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxNodeActionHonorExclusions(this.HandleGenericNameSyntax, SyntaxKind.GenericName);
+            this.RegisterSyntaxNodeActionHonorExclusions(context, this.HandleGenericNameSyntax, SyntaxKind.GenericName);
         }
 
         private void HandleGenericNameSyntax(SyntaxNodeAnalysisContext context)

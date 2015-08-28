@@ -19,7 +19,7 @@
     /// increasing number of errors over time.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1652EnableXmlDocumentationOutput : DiagnosticAnalyzer
+    public class SA1652EnableXmlDocumentationOutput : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1652EnableXmlDocumentationOutput"/> analyzer.
@@ -38,9 +38,9 @@
             ImmutableArray.Create(Descriptor);
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxTreeActionHonorExclusions(HandleSyntaxTree);
+            this.RegisterSyntaxTreeActionHonorExclusions(context, HandleSyntaxTree);
         }
 
         private static void HandleSyntaxTree(SyntaxTreeAnalysisContext context)

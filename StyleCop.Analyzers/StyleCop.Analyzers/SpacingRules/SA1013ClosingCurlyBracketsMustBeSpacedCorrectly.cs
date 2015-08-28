@@ -22,7 +22,7 @@
     /// line.</para>
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SA1013ClosingCurlyBracketsMustBeSpacedCorrectly : DiagnosticAnalyzer
+    public class SA1013ClosingCurlyBracketsMustBeSpacedCorrectly : StyleCopDiagnosticAnalyzer
     {
         /// <summary>
         /// The ID for diagnostics produced by the <see cref="SA1013ClosingCurlyBracketsMustBeSpacedCorrectly"/>
@@ -50,9 +50,9 @@
         }
 
         /// <inheritdoc/>
-        public override void Initialize(AnalysisContext context)
+        protected override void InitializeOnCompilationStart(CompilationStartAnalysisContext context)
         {
-            context.RegisterSyntaxTreeActionHonorExclusions(HandleSyntaxTree);
+            this.RegisterSyntaxTreeActionHonorExclusions(context, HandleSyntaxTree);
         }
 
         private static void HandleSyntaxTree(SyntaxTreeAnalysisContext context)
