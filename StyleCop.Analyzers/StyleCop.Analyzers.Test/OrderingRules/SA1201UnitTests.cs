@@ -258,6 +258,43 @@ public struct FooStruct { }
         }
 
         [Fact]
+        public async Task TestTypeMemberOrderWrongOrderWithDirectiveAsync()
+        {
+            string testCode = @"public interface OuterType
+{
+    string TestProperty { get; set; }
+    #if true
+    event System.Action TestEvent;
+    #endif
+    void TestMethod ();
+    string this[string arg] { get; set; }
+}
+";
+
+            DiagnosticResult[] expected =
+            {
+                this.CSharpDiagnostic().WithLocation(5, 5).WithArguments("event", "property"),
+                this.CSharpDiagnostic().WithLocation(8, 12).WithArguments("indexer", "method")
+            };
+
+            await this.VerifyCSharpDiagnosticAsync(testCode, expected, CancellationToken.None).ConfigureAwait(false);
+
+            string fixedCode = @"public interface OuterType
+{
+    string TestProperty { get; set; }
+    #if true
+    event System.Action TestEvent;
+    #endif
+    void TestMethod ();
+    string this[string arg] { get; set; }
+}
+";
+
+            await this.VerifyCSharpDiagnosticAsync(fixedCode, expected, CancellationToken.None).ConfigureAwait(false);
+            await this.VerifyCSharpFixAsync(testCode, fixedCode).ConfigureAwait(false);
+        }
+
+        [Fact]
         public async Task TestIncompleteMemberAsync()
         {
             // Tests that the analyzer does not crash on incomplete members

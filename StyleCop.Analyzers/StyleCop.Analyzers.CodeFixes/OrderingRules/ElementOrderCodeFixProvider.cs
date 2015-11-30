@@ -3,6 +3,7 @@
 
 namespace StyleCop.Analyzers.OrderingRules
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.Immutable;
     using System.Composition;
@@ -68,9 +69,27 @@ namespace StyleCop.Analyzers.OrderingRules
                 return document;
             }
 
+            if (ContainsPreprocessorDirective(memberDeclaration.Parent))
+            {
+                return document;
+            }
+
             syntaxRoot = UpdateSyntaxRoot(memberDeclaration, elementOrder, syntaxRoot, indentationOptions);
 
             return document.WithSyntaxRoot(syntaxRoot);
+        }
+
+        private static bool ContainsPreprocessorDirective(SyntaxNode node)
+        {
+            foreach (var item in node.DescendantTrivia(n => n == node || n.Parent == node))
+            {
+                if (item.IsDirective)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static SyntaxNode UpdateSyntaxRoot(MemberDeclarationSyntax memberDeclaration, ImmutableArray<OrderingTrait> elementOrder, SyntaxNode syntaxRoot, IndentationOptions indentationOptions)
@@ -275,6 +294,11 @@ namespace StyleCop.Analyzers.OrderingRules
                 {
                     var memberDeclaration = syntaxRoot.FindNode(diagnostic.Location.SourceSpan).FirstAncestorOrSelf<MemberDeclarationSyntax>();
                     if (memberDeclaration == null)
+                    {
+                        continue;
+                    }
+
+                    if (ContainsPreprocessorDirective(memberDeclaration.Parent))
                     {
                         continue;
                     }
